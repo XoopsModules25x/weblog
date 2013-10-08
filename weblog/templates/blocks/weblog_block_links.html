@@ -1,0 +1,12 @@
+<{if $block.lang_whose}>
+  <{$block.lang_whose}><br />
+<{/if}>
+ <{foreach item=links from=$block.links key=category}>
+   <div style="padding: 2px 5px 2px 2px;">
+   <div style="padding: 2px 5px 2px 8px; font-weight: bold;	">[<{$category}>]</div>
+     <{foreach from=$links item=link key=key}>
+        <div style="padding: 2px 5px 2px 12px;"><a href="<{$link.url}>" target="_blank"><{$link.title}></a></div>
+        <{if $block.showdsc}><div style="padding: 2px 5px 8px 18px;">--&nbsp;<{$link.dsc}></div><{/if}>
+     <{/foreach}>
+   </div>
+<{/foreach}>
