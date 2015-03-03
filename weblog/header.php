@@ -7,18 +7,18 @@
  */
 
 if( ! defined('XOOPS_ROOT_PATH') )
-	include_once "../../mainfile.php";
+    include_once "../../mainfile.php";
 
 // $mydirname / $mydirnumber are critical GLOBALS.
 if( ! isset($mydirname) ){
     $mydirname = basename(  dirname( __FILE__ ) ) ;
 }
 if( ! isset($mydirnumber) ){
-	if(preg_match("/^(\D+)(\d+)$/", $mydirname , $match)){
-		$mydirnumber = strval($match[2]) ;
-	}else{
-		$mydirnumber = '' ;
-	}
+    if(preg_match("/^(\D+)(\d+)$/", $mydirname , $match)){
+        $mydirnumber = strval($match[2]) ;
+    }else{
+        $mydirnumber = '' ;
+    }
 }
 include_once XOOPS_ROOT_PATH.'/modules/'.$mydirname.'/config.php';
 
@@ -31,4 +31,3 @@ xoops_loadLanguage('main', $mydirname);
 //		include_once sprintf('%s/modules/%s/language/english/main.php', XOOPS_ROOT_PATH , $mydirname) ;
 //	}
 //}
-

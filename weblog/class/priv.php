@@ -34,7 +34,7 @@ if( ! class_exists('WeblogPrivBase') ){
 
 class WeblogPrivBase extends XoopsObject {
 
-	var $mydirname='' ;		// abstruct
+    var $mydirname='' ;        // abstruct
 
     /**
      * Constructs an instance of this class
@@ -55,10 +55,10 @@ class WeblogPrivBase extends XoopsObject {
 
 class WeblogPrivHandlerBase extends XoopsObjectHandler {
 
-	var $mydirname='' ;		// abstruct
+    var $mydirname='' ;        // abstruct
 
     function &create() {
-        return new WeblogPrivBase();	// abstruct
+        return new WeblogPrivBase();    // abstruct
     }
 
     function &get($id) {
@@ -72,10 +72,12 @@ class WeblogPrivHandlerBase extends XoopsObjectHandler {
                 if ($this->db->getRowsNum($result)==1) {
                     $entry = $this->create();
                     $entry->assignVars($this->db->fetchArray($result));
+
                     return $entry;
                 }
             }
         }
+
         return false;
     }
 
@@ -127,6 +129,7 @@ class WeblogPrivHandlerBase extends XoopsObjectHandler {
         if (!$result = $this->db->queryF($sql)) {  // must be queryF()
             return false;
         }
+
         return true;
     }
 
@@ -139,6 +142,7 @@ class WeblogPrivHandlerBase extends XoopsObjectHandler {
             return 0;
         }
         $count = $this->db->fetchArray($result);
+
         return $count['count'];
     }
 
@@ -173,6 +177,7 @@ class WeblogPrivHandlerBase extends XoopsObjectHandler {
             }
             unset($entry);
         }
+
         return $ret;
     }
 
@@ -195,7 +200,7 @@ class WeblogPrivHandlerBase extends XoopsObjectHandler {
 // for module duplicate
 $entry_class =  strval(ucfirst($mydirname) . 'Priv') ;
 if( ! defined($entry_class) ){
-	define($entry_class , 'DEFINED CLASS') ;
+    define($entry_class , 'DEFINED CLASS') ;
 
 eval('
 	class '.  ucfirst($GLOBALS['mydirname']) .'Priv extends WeblogPrivBase{
@@ -217,4 +222,3 @@ eval('
 ') ;
 
 }
-?>

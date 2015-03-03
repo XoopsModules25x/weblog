@@ -226,4 +226,3 @@ define('_MI_WEBLOG_SEND_TO_ADMIN_DSC','');
 define('_MI_WEBLOG_SEND_ADDRESS','spam到着通知先メールアドレス(複数ある場合は|で区切る)<br />特に指定しない場合は管理者宛');
 define('_MI_WEBLOG_SEND_ADDRESS_DSC','');
 }
-?>

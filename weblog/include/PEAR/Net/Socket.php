@@ -82,13 +82,13 @@ class Net_Socket extends PEAR {
      * Connect to the specified port. If called when the socket is
      * already connected, it disconnects and connects again.
      *
-     * @param string  $addr        IP address or host name.
-     * @param integer $port        TCP port number.
-     * @param boolean $persistent  (optional) Whether the connection is
-     *                             persistent (kept open between requests
-     *                             by the web server).
-     * @param integer $timeout     (optional) How long to wait for data.
-     * @param array   $options     See options for stream_context_create.
+     * @param string  $addr       IP address or host name.
+     * @param integer $port       TCP port number.
+     * @param boolean $persistent (optional) Whether the connection is
+     *                            persistent (kept open between requests
+     *                            by the web server).
+     * @param integer $timeout    (optional) How long to wait for data.
+     * @param array   $options    See options for stream_context_create.
      *
      * @access public
      *
@@ -162,6 +162,7 @@ class Net_Socket extends PEAR {
 
         @fclose($this->fp);
         $this->fp = null;
+
         return true;
     }
 
@@ -169,7 +170,7 @@ class Net_Socket extends PEAR {
      * Find out if the socket is in blocking mode.
      *
      * @access public
-     * @return boolean  The current blocking mode.
+     * @return boolean The current blocking mode.
      */
     function isBlocking()
     {
@@ -182,9 +183,9 @@ class Net_Socket extends PEAR {
      * if there is no data available, whereas it will block until there
      * is data for blocking sockets.
      *
-     * @param boolean $mode  True for blocking sockets, false for nonblocking.
+     * @param  boolean $mode True for blocking sockets, false for nonblocking.
      * @access public
-     * @return mixed true on success or an error object otherwise
+     * @return mixed   true on success or an error object otherwise
      */
     function setBlocking($mode)
     {
@@ -194,6 +195,7 @@ class Net_Socket extends PEAR {
 
         $this->blocking = $mode;
         socket_set_blocking($this->fp, $this->blocking);
+
         return true;
     }
 
@@ -201,10 +203,10 @@ class Net_Socket extends PEAR {
      * Sets the timeout value on socket descriptor,
      * expressed in the sum of seconds and microseconds
      *
-     * @param integer $seconds  Seconds.
-     * @param integer $microseconds  Microseconds.
+     * @param  integer $seconds      Seconds.
+     * @param  integer $microseconds Microseconds.
      * @access public
-     * @return mixed true on success or an error object otherwise
+     * @return mixed   true on success or an error object otherwise
      */
     function setTimeout($seconds, $microseconds)
     {
@@ -243,7 +245,7 @@ class Net_Socket extends PEAR {
      *
      * @access public
      * @return $size bytes of data from the socket, or a PEAR_Error if
-     *         not connected.
+     *               not connected.
      */
     function gets($size)
     {
@@ -260,10 +262,10 @@ class Net_Socket extends PEAR {
      * chunk; if you know the size of the data you're getting
      * beforehand, this is definitely the way to go.
      *
-     * @param integer $size  The number of bytes to read from the socket.
+     * @param  integer $size The number of bytes to read from the socket.
      * @access public
-     * @return $size bytes of data from the socket, or a PEAR_Error if
-     *         not connected.
+     * @return $size   bytes of data from the socket, or a PEAR_Error if
+     *                      not connected.
      */
     function read($size)
     {
@@ -277,9 +279,9 @@ class Net_Socket extends PEAR {
     /**
      * Write a specified amount of data.
      *
-     * @param string  $data       Data to write.
-     * @param integer $blocksize  Amount of data to write at once.
-     *                            NULL means all at once.
+     * @param string  $data      Data to write.
+     * @param integer $blocksize Amount of data to write at once.
+     *                           NULL means all at once.
      *
      * @access public
      * @return mixed true on success or an error object otherwise
@@ -342,7 +344,7 @@ class Net_Socket extends PEAR {
      *
      * @access public
      * @return 1 byte of data from the socket, or a PEAR_Error if
-     *         not connected.
+     *           not connected.
      */
     function readByte()
     {
@@ -358,7 +360,7 @@ class Net_Socket extends PEAR {
      *
      * @access public
      * @return 1 word of data from the socket, or a PEAR_Error if
-     *         not connected.
+     *           not connected.
      */
     function readWord()
     {
@@ -367,6 +369,7 @@ class Net_Socket extends PEAR {
         }
 
         $buf = @fread($this->fp, 2);
+
         return (ord($buf[0]) + (ord($buf[1]) << 8));
     }
 
@@ -374,8 +377,8 @@ class Net_Socket extends PEAR {
      * Reads an int of data
      *
      * @access public
-     * @return integer  1 int of data from the socket, or a PEAR_Error if
-     *                  not connected.
+     * @return integer 1 int of data from the socket, or a PEAR_Error if
+     *                 not connected.
      */
     function readInt()
     {
@@ -384,6 +387,7 @@ class Net_Socket extends PEAR {
         }
 
         $buf = @fread($this->fp, 4);
+
         return (ord($buf[0]) + (ord($buf[1]) << 8) +
                 (ord($buf[2]) << 16) + (ord($buf[3]) << 24));
     }
@@ -393,7 +397,7 @@ class Net_Socket extends PEAR {
      *
      * @access public
      * @return string, or a PEAR_Error if
-     *         not connected.
+     *                 not connected.
      */
     function readString()
     {
@@ -405,6 +409,7 @@ class Net_Socket extends PEAR {
         while (($char = @fread($this->fp, 1)) != "\x00")  {
             $string .= $char;
         }
+
         return $string;
     }
 
@@ -413,7 +418,7 @@ class Net_Socket extends PEAR {
      *
      * @access public
      * @return Dot formated string, or a PEAR_Error if
-     *         not connected.
+     *             not connected.
      */
     function readIPAddress()
     {
@@ -422,6 +427,7 @@ class Net_Socket extends PEAR {
         }
 
         $buf = @fread($this->fp, 4);
+
         return sprintf("%s.%s.%s.%s", ord($buf[0]), ord($buf[1]),
                        ord($buf[2]), ord($buf[3]));
     }
@@ -432,8 +438,8 @@ class Net_Socket extends PEAR {
      *
      * @access public
      * @return All available data up to a newline, without that
-     *         newline, or until the end of the socket, or a PEAR_Error if
-     *         not connected.
+     *             newline, or until the end of the socket, or a PEAR_Error if
+     *             not connected.
      */
     function readLine()
     {
@@ -449,6 +455,7 @@ class Net_Socket extends PEAR {
                 return rtrim($line, "\r\n");
             }
         }
+
         return $line;
     }
 
@@ -462,8 +469,8 @@ class Net_Socket extends PEAR {
      *
      * @access public
      *
-     * @return string  All data until the socket closes, or a PEAR_Error if
-     *                 not connected.
+     * @return string All data until the socket closes, or a PEAR_Error if
+     *                not connected.
      */
     function readAll()
     {
@@ -475,6 +482,7 @@ class Net_Socket extends PEAR {
         while (!feof($this->fp)) {
             $data .= @fread($this->fp, $this->lineLength);
         }
+
         return $data;
     }
 
@@ -482,13 +490,13 @@ class Net_Socket extends PEAR {
      * Runs the equivalent of the select() system call on the socket
      * with a timeout specified by tv_sec and tv_usec.
      *
-     * @param integer $state    Which of read/write/error to check for.
-     * @param integer $tv_sec   Number of seconds for timeout.
-     * @param integer $tv_usec  Number of microseconds for timeout.
+     * @param integer $state   Which of read/write/error to check for.
+     * @param integer $tv_sec  Number of seconds for timeout.
+     * @param integer $tv_usec Number of microseconds for timeout.
      *
      * @access public
      * @return False if select fails, integer describing which of read/write/error
-     *         are ready, or PEAR_Error if not connected.
+     *               are ready, or PEAR_Error if not connected.
      */
     function select($state, $tv_sec, $tv_usec = 0)
     {
@@ -522,6 +530,7 @@ class Net_Socket extends PEAR {
         if (count($except)) {
             $result |= NET_SOCKET_ERROR;
         }
+
         return $result;
     }
 

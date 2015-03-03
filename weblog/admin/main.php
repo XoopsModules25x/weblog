@@ -53,10 +53,10 @@ function adminItem($url, $title, $desc='') {
 
 switch($op){
 
-	case 'templates' :
-	header('Location: '.XOOPS_URL.'/modules/system/admin.php?fct=tplsets&op=listtpl&tplset='.$xoopsConfig['template_set'].'&moddir='.$xoopsModule->dirname().'');
-		exit();
-		break ;
+    case 'templates' :
+    header('Location: '.XOOPS_URL.'/modules/system/admin.php?fct=tplsets&op=listtpl&tplset='.$xoopsConfig['template_set'].'&moddir='.$xoopsModule->dirname().'');
+        exit();
+        break ;
     default:
     xoops_cp_header();
     echo sprintf('<h4>%s</h4>', _AM_WEBLOG_CONFIG);
@@ -98,4 +98,3 @@ switch($op){
     xoops_cp_footer();
     break;
 }
-?>

@@ -78,7 +78,6 @@ define('_AM_WEBLOG_CAT_GPERM', 'このカテゴリに投稿を許可するグル
 define('_AM_WEBLOG_CAT_OPERATE', '操作');
 define('_AM_WEBLOG_CAT_SETALL', '全てのグループ毎のカテゴリ投稿権限を一度に設定する');
 
-
 define('_AM_WEBLOG_MYBLOCKSADMIN', 'ブロック・アクセス権限');
 define('_AM_WEBLOG_MYBLOCKSADMINDSC', 'ブロックごと・グループごとの設定を行います。');
 define('_AM_WEBLOG_TEMPLATE_MANEGER', 'テンプレート');
@@ -115,6 +114,4 @@ define('_AM_WEBLOG_DIRNOTCREATED2','The directory can not be created');
 define('_AM_WEBLOG_PERMSET2','The permission has been set');
 define('_AM_WEBLOG_PERMNOTSET2','The permission can not be set');
 
-
 }
-?>

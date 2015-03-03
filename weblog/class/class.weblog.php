@@ -39,6 +39,7 @@ class Weblog {
         if (!isset($instance)) {
             $instance = new Weblog();
         }
+
         return $instance;
     }
 
@@ -53,6 +54,7 @@ class Weblog {
     function removeEntry($blog_id) {
         $entry =& $this->handler->create();
         $entry->setVar('blog_id', intval($blog_id));
+
         return $this->handler->delete($entry);
     }
 
@@ -63,6 +65,7 @@ class Weblog {
         if ($count == 1) {
             return true;
         }
+
         return false;
     }
 
@@ -73,6 +76,7 @@ class Weblog {
             $criteria = new criteriaCompo($criteria);
             $criteria->add(new criteria('user_id', $user_id));
         }
+
         return $this->handler->getCount($criteria);
     }
 
@@ -86,6 +90,7 @@ class Weblog {
         if ($user_id > 0) {
             $criteria->add(new criteria('user_id', $user_id));
         }
+
         return $this->handler->getCount($criteria);
     }
 
@@ -94,8 +99,8 @@ class Weblog {
         $criteria->add(new criteria('private', 'N'), 'OR');
         $criteria = new criteriaCompo($criteria);
         if ($date>0) {
-			$date_num = strlen(strval($date)) ;
-			$criteria->add( new criteria(sprintf('left(from_unixtime(created+%d)+0,%d)',$useroffset*3600 , $date_num) , $date) ) ;
+            $date_num = strlen(strval($date)) ;
+            $criteria->add( new criteria(sprintf('left(from_unixtime(created+%d)+0,%d)',$useroffset*3600 , $date_num) , $date) ) ;
         }
         if ($cat_id>0) {
             $criteria->add(new criteria('cat_id', $cat_id));
@@ -103,6 +108,7 @@ class Weblog {
         if ($user_id > 0) {
             $criteria->add(new criteria('user_id', $user_id));
         }
+
         return $this->handler->getCount($criteria);
     }
 
@@ -122,6 +128,7 @@ class Weblog {
             $criteria->setLimit($perPage);
         }
         $result =& $this->handler->getObjects($criteria, false, 'details', $useroffset);
+
         return $result;
     }
 
@@ -143,6 +150,7 @@ class Weblog {
             $criteria->setLimit($perPage);
         }
         $result =& $this->handler->getObjects($criteria);
+
         return $result;
     }
 
@@ -165,9 +173,9 @@ class Weblog {
             $criteria->setLimit($perPage);
         }
         $result =& $this->handler->getObjects($criteria, false , 'details', $useroffset);
+
         return $result;
     }
-
 
     function getEntry($currentuid, $blog_id=0, $user_id=0, $useroffset=0) {
         $criteria = new criteriaCompo(new criteria('user_id', $currentuid));
@@ -194,20 +202,21 @@ class Weblog {
     }
 
     function getPrevNext($blog_id , $created , $currentuid=0 , $isAdmin=0 , $cat_id=0 , $user_id=0 ){
-		if( empty($isAdmin) ){
-	        $criteria = new criteriaCompo(new criteria('user_id', $currentuid));
-	        $criteria->add(new criteria('private', 'N'), 'OR');
-		}else{
-			$criteria = NULL ;
-		}
+        if( empty($isAdmin) ){
+            $criteria = new criteriaCompo(new criteria('user_id', $currentuid));
+            $criteria->add(new criteria('private', 'N'), 'OR');
+        }else{
+            $criteria = NULL ;
+        }
         $criteria = new criteriaCompo($criteria);
-		if( $cat_id > 0){
-	        $criteria->add(new criteria('cat_id', $cat_id));
-		}
+        if( $cat_id > 0){
+            $criteria->add(new criteria('cat_id', $cat_id));
+        }
         if ($user_id > 0) {
             $criteria->add(new criteria('user_id', $user_id));
         }
-		return $this->handler->getPrevNextBlog_id($blog_id , $created , $criteria) ;
+
+        return $this->handler->getPrevNextBlog_id($blog_id , $created , $criteria) ;
     }
 
 /**
@@ -218,34 +227,33 @@ class Weblog {
         $criteria = new criteriaCompo(new criteria('user_id', $currentuid));
         $criteria->add(new criteria('private', 'N'), 'OR');
         $criteria = new criteriaCompo($criteria);
-		$criteria->add(new Criteria('cat_id', "(".implode(',', $cid_array).")", 'IN'));
+        $criteria->add(new Criteria('cat_id', "(".implode(',', $cid_array).")", 'IN'));
 
         if ($user_id > 0) {
             $criteria->add(new criteria('user_id', $user_id));
         }
+
         return $this->handler->getCount($criteria);
     }
 
-
-
-	function getEntriesForArchives($currentuid , $blogger_id , $date , $cat_id , $start=0 , $perPage=0 , $order='DESC' , $useroffset=0 ){
-		$date = intval($date) ;
-		// basic
+    function getEntriesForArchives($currentuid , $blogger_id , $date , $cat_id , $start=0 , $perPage=0 , $order='DESC' , $useroffset=0 ){
+        $date = intval($date) ;
+        // basic
         $criteria = new criteriaCompo(new criteria('user_id', $currentuid));
         $criteria->add(new criteria('private', 'N'), 'OR');
         $criteria = new criteriaCompo($criteria);
-		// by user_id
-		if( $blogger_id > 0 )
-			$criteria->add( new criteria('user_id', $blogger_id) ) ;
-		// by category
-		if( $cat_id > 0 )
-			$criteria->add( new criteria('cat_id', $cat_id) ) ;
-		// by date
-		if( $date > 0 ){
-			$date_num = strlen(strval($date)) ;
-			$criteria->add( new criteria(sprintf('left(from_unixtime(created+%d)+0,%d)',$useroffset*3600 , $date_num) , $date) ) ;
-		}
-		// order , start , Limit
+        // by user_id
+        if( $blogger_id > 0 )
+            $criteria->add( new criteria('user_id', $blogger_id) ) ;
+        // by category
+        if( $cat_id > 0 )
+            $criteria->add( new criteria('cat_id', $cat_id) ) ;
+        // by date
+        if( $date > 0 ){
+            $date_num = strlen(strval($date)) ;
+            $criteria->add( new criteria(sprintf('left(from_unixtime(created+%d)+0,%d)',$useroffset*3600 , $date_num) , $date) ) ;
+        }
+        // order , start , Limit
         $criteria->setSort('created');
         $criteria->setOrder($order);
         if ($start > 0) {
@@ -255,8 +263,9 @@ class Weblog {
             $criteria->setLimit($perPage);
         }
         $result =& $this->handler->getObjects($criteria, false, 'details' , $useroffset);
+
         return $result;
-	}
+    }
 
 /**
 * get entries of categories specified in array sorted order by created for archive.php
@@ -266,7 +275,7 @@ class Weblog {
         $criteria = new criteriaCompo(new criteria('user_id', $currentuid));
         $criteria->add(new criteria('private', 'N'), 'OR');
         $criteria = new criteriaCompo($criteria);
-		$criteria->add(new Criteria('cat_id', "(".implode(',', $cid_array).")", 'IN'));
+        $criteria->add(new Criteria('cat_id', "(".implode(',', $cid_array).")", 'IN'));
         if ($user_id > 0) {
             $criteria->add(new criteria('user_id', $user_id));
         }
@@ -279,6 +288,7 @@ class Weblog {
             $criteria->setLimit($perPage);
         }
         $result =& $this->handler->getObjects($criteria);
+
         return $result;
     }
 
@@ -290,7 +300,7 @@ class Weblog {
         $criteria = new criteriaCompo(new criteria('user_id', $currentuid));
         $criteria->add(new criteria('private', 'N'), 'OR');
         $criteria = new criteriaCompo($criteria);
-		$criteria->add(new Criteria('cat_id', "(".implode(',', $cid_array).")", 'IN'));
+        $criteria->add(new Criteria('cat_id', "(".implode(',', $cid_array).")", 'IN'));
         if ($user_id > 0) {
             $criteria->add(new criteria('user_id', $user_id));
         }
@@ -303,8 +313,8 @@ class Weblog {
             $criteria->setLimit($perPage);
         }
         $result =& $this->handler->getObjects($criteria);
+
         return $result;
     }
 
 }
-?>

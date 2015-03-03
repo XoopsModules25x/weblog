@@ -24,7 +24,6 @@
  * Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307 USA
  */
 
-
 if( defined( 'FOR_XOOPS_LANG_CHECKER' ) || ! defined( 'WEBLOG_MB_LOADED' ) ) {
 
 define( 'WEBLOG_MB_LOADED' , 1 ) ;
@@ -45,7 +44,7 @@ define('_MB_WEBLOG_EDIT_LINKS_MODULE', 'select integration link module<br />(now
 define('_MB_WEBLOG_EDIT_LINKS_NUMBER', 'Number of show links');
 define('_MB_WEBLOG_EDIT_LINKS_ONLYPOST', 'Show when Blogger POST (0=No , 1=Yes)');
 define('_MB_WEBLOG_EDIT_LINKS_SHOWDSC', 'Show descriptions of links (0=No , 1=Yes)');
-define('_MB_WEBLOG_EDIT_CAT_ORDERBY', 'Order category');	// added for category list by hodaka
+define('_MB_WEBLOG_EDIT_CAT_ORDERBY', 'Order category');    // added for category list by hodaka
 define('_MB_WEBLOG_EDIT_CAT_TITLE', 'TITLE');
 define('_MB_WEBLOG_EDIT_CAT_ID', 'ID');
 define('_MB_WEBLOG_EDIT_SHOW_FORBIDDEN_PICTURE', 'Show picture when the entry is not allowed to user. (0=not show , 1=show )');

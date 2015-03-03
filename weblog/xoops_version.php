@@ -25,12 +25,11 @@
  */
 
 if (!defined('XOOPS_ROOT_PATH')) {
-	die('XOOPS root path not defined');
+    die('XOOPS root path not defined');
 }
 $mydirname = basename( dirname( __FILE__ ) ) ;
 if( ! preg_match( '/^(\D+)(\d*)$/' , $mydirname , $regs ) ) echo ( "invalid dirname: " . htmlspecialchars( $mydirname ) ) ;
 $mydirnumber = $regs[2] === '' ? '' : strval( $regs[2] ) ;
-
 
 $modversion['name'] = _MI_WEBLOG_NAME . $mydirnumber ;
 $modversion['version'] = 1.47;
@@ -45,11 +44,9 @@ $modversion['official'] = 0;
 $modversion['image'] = "images/weblog".$mydirnumber."_slogo.png";
 $modversion['dirname'] = basename( dirname( __FILE__ ));
 
-
 $modversion['help']        = 'page=help';
 $modversion['license']     = 'GNU GPL 2.0 or later';
 $modversion['license_url'] = "www.gnu.org/licenses/gpl-2.0.html";
-
 
 $modversion['dirmoduleadmin'] = '/Frameworks/moduleclasses/moduleadmin';
 $modversion['icons16']        = '../../Frameworks/moduleclasses/icons/16';
@@ -182,7 +179,6 @@ $modversion['config'][] = array('name'        => 'form_options',
                                 'valuetype'   => 'text',
                                 'options'     => $editorList,
                                 'default'     => 'dhtmltextarea');
-
 
 $modversion['config'][] = array(
     'name' => 'adminonly',
@@ -712,5 +708,3 @@ $modversion['notification']['event'][1]['mail_subject'] = _MI_WEBLOG_ADD_NOTIFYS
 if( ! empty( $_POST['fct'] ) && ! empty( $_POST['op'] ) && $_POST['fct'] == 'modulesadmin' && $_POST['op'] == 'update_ok' && $_POST['dirname'] == $modversion['dirname'] ) {
 //  include dirname( __FILE__ ) . "/include/onupdate.inc.php" ;
 }
-
-?>

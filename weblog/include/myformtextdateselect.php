@@ -50,23 +50,23 @@
 class myXoopsFexormTtDateSelect extends XoopsFormText
 {
 
-	function myXoopsFormTextDateSelect($caption, $name, $size = 15, $value= 0)
-	{
-		$value = !is_numeric($value) ? time() : intval($value);
-		$this->XoopsFormText($caption, $name, $size, 25, $value);
-	}
+    function myXoopsFormTextDateSelect($caption, $name, $size = 15, $value= 0)
+    {
+        $value = !is_numeric($value) ? time() : intval($value);
+        $this->XoopsFormText($caption, $name, $size, 25, $value);
+    }
 
-	function render()
-	{
-		global $xoopsTpl ;
-		$jstime = formatTimestamp('F j Y, H:i:s', $this->getValue());
-		ob_start();
-		include_once XOOPS_ROOT_PATH.'/include/calendarjs.php';
-		$contents = ob_get_contents();
-		ob_end_clean();
-		$xoops_module_header = $xoopsTpl->get_template_vars('xoops_module_header') . $contents ;
-		$xoopsTpl->assign('xoops_module_header',$xoops_module_header) ;
-		return "<input type='text' name='".$this->getName()."' id='".$this->getName()."' size='".$this->getSize()."' maxlength='".$this->getMaxlength()."' value='".date("Y-m-d", $this->getValue())."'".$this->getExtra()." /><input type='reset' value=' ... ' onclick='return showCalendar(\"".$this->getName()."\");'>";
-	}
+    function render()
+    {
+        global $xoopsTpl ;
+        $jstime = formatTimestamp('F j Y, H:i:s', $this->getValue());
+        ob_start();
+        include_once XOOPS_ROOT_PATH.'/include/calendarjs.php';
+        $contents = ob_get_contents();
+        ob_end_clean();
+        $xoops_module_header = $xoopsTpl->get_template_vars('xoops_module_header') . $contents ;
+        $xoopsTpl->assign('xoops_module_header',$xoops_module_header) ;
+
+        return "<input type='text' name='".$this->getName()."' id='".$this->getName()."' size='".$this->getSize()."' maxlength='".$this->getMaxlength()."' value='".date("Y-m-d", $this->getValue())."'".$this->getExtra()." /><input type='reset' value=' ... ' onclick='return showCalendar(\"".$this->getName()."\");'>";
+    }
 }
-?>

@@ -59,7 +59,6 @@ return preg_replace(
     ),
     $format);
 
-
 $count = 100;
 
 $start = microtime(true);
@@ -97,7 +96,6 @@ for ($i = 0; $i < $count; $i++) {
      );
 }
 echo "Completed in " . (microtime(true) - $start) . " Seconds\n";
-
 
 $tagName = strtolower($node->tagName);
 if ($callback = $this->handlers[$tagName]) {

@@ -240,6 +240,7 @@ class Date_Calc
         $iso    = Date_Calc::gregorianToISO($day, $month, $year);
         $parts  = explode('-',$iso);
         $week_number = intval($parts[1]);
+
         return $week_number;
     } // end func weekOfYear
 
@@ -759,7 +760,7 @@ class Date_Calc
      * @access public
      *
      * @return int absolute number of days between dates,
-     *      -1 if there is an error.
+     *             -1 if there is an error.
      */
 
     function dateDiff($day1,$month1,$year1,$day2,$month2,$year2)
@@ -795,6 +796,7 @@ class Date_Calc
         if ($ndays1 == $ndays2) {
             return 0;
         }
+
         return ($ndays1 > $ndays2) ? 1 : -1;
     } // end func compareDates
 
@@ -868,6 +870,7 @@ class Date_Calc
             $weeks = 0;
         }
         $first_week_days %= 7;
+
         return (ceil((Date_Calc::daysInMonth($month, $year) - $first_week_days) / 7) + $weeks);
     } // end func weeksInMonth
 
@@ -978,7 +981,6 @@ class Date_Calc
             $day = Date_Calc::dateNow('%d');
         }
 
-
         $this_weekday = Date_Calc::dayOfWeek($day,$month,$year);
 
         $interval = (6 + DATE_CALC_BEGIN_WEEKDAY - $this_weekday) % 7;
@@ -1063,7 +1065,6 @@ class Date_Calc
         $prev_week_day = substr($date,6,2);
 
         return Date_Calc::beginOfWeek($prev_week_day,$prev_week_month,$prev_week_year,$format);
-
 
         $date = Date_Calc::daysToDate(Date_Calc::dateToDays($day-7,$month,$year),"%Y%m%d");
     } // end func beginOfPrevWeek
@@ -1263,6 +1264,7 @@ class Date_Calc
 
         $century = sprintf('%02d',$century);
         $year = sprintf('%02d',$year);
+
         return(Date_Calc::dateFormat($day,$month,$century.$year,$format));
     } // end func daysToDate
 
@@ -1409,6 +1411,7 @@ class Date_Calc
                 $output .= $char;
             }
         }
+
         return $output;
     } // end func dateFormat
 
@@ -1595,6 +1598,7 @@ class Date_Calc
         for($i=1;$i<13;$i++) {
             $months[$i] = strftime('%B', mktime(0, 0, 0, $i, 1, 2001));
         }
+
         return($months);
     } // end func getMonthNames
 
@@ -1613,6 +1617,7 @@ class Date_Calc
         for($i=0;$i<7;$i++) {
             $weekdays[$i] = strftime('%A', mktime(0, 0, 0, 1, $i, 2001));
         }
+
         return($weekdays);
     } // end func getWeekDays
 
@@ -1681,6 +1686,7 @@ class Date_Calc
         // put it all together
         if ($weeknumber < 10)
             $weeknumber = '0'.$weeknumber;
+
         return "{$yearnumber}-{$weeknumber}-{$weekday}";
     }
 
@@ -1734,4 +1740,3 @@ class Date_Calc
 
 
 }
-?>

@@ -115,4 +115,3 @@ foreach($results as $entryObject) {
 
 header('Content-type: application/xml; charset=utf-8');
 $tpl->display('db:weblog_rss.html');
-?>

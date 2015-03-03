@@ -35,16 +35,14 @@ define( "_BL_ALBM_CAPTION_REFRESH" , "更新" ) ;
 define( "_BL_ALBM_CAPTION_IMAGEXYT" , "サイズ" ) ;
 define( "_BL_ALBM_CAPTION_CATEGORY" , "カテゴリー" ) ;
 
-	// encoding conversion if possible and needed
-	function myalbum_callback_after_stripslashes_local( $text )
-	{
-		if( function_exists( 'mb_convert_encoding' ) && mb_internal_encoding() !=  mb_http_output() ) {
-			return mb_convert_encoding( $text , mb_internal_encoding() , mb_detect_order() ) ;
-		} else {
-			return $text ;
-		}
-	}
+    // encoding conversion if possible and needed
+    function myalbum_callback_after_stripslashes_local( $text )
+    {
+        if( function_exists( 'mb_convert_encoding' ) && mb_internal_encoding() !=  mb_http_output() ) {
+            return mb_convert_encoding( $text , mb_internal_encoding() , mb_detect_order() ) ;
+        } else {
+            return $text ;
+        }
+    }
 
 }
-
-?>

@@ -134,7 +134,6 @@ define('_BL_TRACKBACK_RECIEVED' , 'Trackbacks to this entry');
 define('_BL_TRACKBACKS_FOR','to %s\'s Entries ');
 define('_BL_COMMENTS_FOR','for %s\'s Entries ');
 
-
 // use weBLog imagemanager :: myalbum-P
 define("_BL_ALBM_PHOTOUPLOAD","Photo Upload");
 define("_BL_ALBM_MAXPIXEL","Max pixel size");
@@ -152,4 +151,3 @@ define("_BL_ALBM_FILEERROR","Error: Photos are too big or some troubles about co
 define("_BL_ALBM_FILEREADERROR","Error: Photos are not readable.");
 
 }
-?>

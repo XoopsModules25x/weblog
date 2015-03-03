@@ -41,4 +41,3 @@ function weblog_com_update($link_id, $total_num){
 function weblog_com_approve(&$comment){
   // send notification mail
 }
-?>

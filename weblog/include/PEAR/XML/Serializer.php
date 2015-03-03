@@ -276,7 +276,7 @@ class XML_Serializer extends PEAR
 
         $rootAttributes = $this->options['rootAttributes'];
         if (is_array($this->options['namespace'])) {
-        	$rootAttributes['xmlns:'.$this->options['namespace'][0]] = $this->options['namespace'][1];
+            $rootAttributes['xmlns:'.$this->options['namespace'][0]] = $this->options['namespace'][1];
         }
         
         $this->_serializedData = '';
@@ -333,6 +333,7 @@ class XML_Serializer extends PEAR
         if ($this->_serializedData == null ) {
             return  $this->raiseError('No serialized data available. Use XML_Serializer::serialize() first.', XML_SERIALIZER_ERROR_NO_SERIALIZATION);
         }
+
         return $this->_serializedData;
     }
     
@@ -361,6 +362,7 @@ class XML_Serializer extends PEAR
                         );
             $xml = $this->_createXMLTag($tag);
         }
+
         return $xml;
     }
     
@@ -421,6 +423,7 @@ class XML_Serializer extends PEAR
                         $string .= str_repeat($this->options['indent'], $this->_tagDepth);
                     }
                 }
+
                 return rtrim($string);
             }
         }
@@ -509,6 +512,7 @@ class XML_Serializer extends PEAR
         }
 
         $string = $this->_createXMLTag($tag, false);
+
         return $string;
     }
 
@@ -539,6 +543,7 @@ class XML_Serializer extends PEAR
         }
         
         $string = $this->_serializeArray($properties, $tagName, $attributes);
+
         return $string;
     }
   
@@ -561,11 +566,11 @@ class XML_Serializer extends PEAR
     function _createXMLTag( $tag, $replaceEntities = true )
     {
         if ($this->options['namespace'] !== null) {
-        	if (is_array($this->options['namespace'])) {
-        		$tag['qname'] = $this->options['namespace'][0] . ':' . $tag['qname'];
-        	} else {
-        		$tag['qname'] = $this->options['namespace'] . ':' . $tag['qname'];
-        	}
+            if (is_array($this->options['namespace'])) {
+                $tag['qname'] = $this->options['namespace'][0] . ':' . $tag['qname'];
+            } else {
+                $tag['qname'] = $this->options['namespace'] . ':' . $tag['qname'];
+            }
         }
 
         if ($this->options['indentAttributes'] !== false) {
@@ -584,7 +589,7 @@ class XML_Serializer extends PEAR
         }
 
         if ($replaceEntities) {
-           	$replaceEntities = $this->options['replaceEntities'];
+               $replaceEntities = $this->options['replaceEntities'];
         }
     
         if (is_array($tag['content'])) {
@@ -598,9 +603,9 @@ class XML_Serializer extends PEAR
         if (is_scalar($tag['content']) || is_null($tag['content'])) {
             if ($this->options['encodeFunction']) {
                 if ($replaceEntities === true) {
-                	$tag['content'] = call_user_func($this->options['encodeFunction'], $tag['content']);
+                    $tag['content'] = call_user_func($this->options['encodeFunction'], $tag['content']);
                 }
-            	$tag['attributes'] = array_map($this->options['encodeFunction'], $tag['attributes']);
+                $tag['attributes'] = array_map($this->options['encodeFunction'], $tag['attributes']);
             }
             $tag = XML_Util::createTagFromArray($tag, $replaceEntities, $multiline, $indent, $this->options['linebreak']);
         } elseif (is_array($tag['content'])) {
@@ -610,14 +615,14 @@ class XML_Serializer extends PEAR
         } elseif (is_resource($tag['content'])) {
             settype($tag['content'], 'string');
             if ($this->options['encodeFunction']) {
-            	if ($replaceEntities === true) {
+                if ($replaceEntities === true) {
                     $tag['content'] = call_user_func($this->options['encodeFunction'], $tag['content']);
-            	}
-            	$tag['attributes'] = array_map($this->options['encodeFunction'], $tag['attributes']);
+                }
+                $tag['attributes'] = array_map($this->options['encodeFunction'], $tag['attributes']);
             }
             $tag = XML_Util::createTagFromArray($tag, $replaceEntities);
         }
+
         return  $tag;
     }
 }
-?>

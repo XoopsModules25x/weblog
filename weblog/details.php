@@ -34,11 +34,11 @@ $blog_id = !empty($_GET['blog_id']) ? intval($_GET['blog_id']) : 0;
 // Determine the user we are retrieving the blog entries for
 if (is_object($xoopsUser)) {
     $currentUser = $xoopsUser;
-	$useroffset = $xoopsUser->timezone() - $xoopsConfig['server_TZ'] ;
+    $useroffset = $xoopsUser->timezone() - $xoopsConfig['server_TZ'] ;
 } else {
     $currentUser = new XoopsUser();
     $currentUser->setVar('uid', 0);
-	$useroffset = $xoopsConfig['default_TZ'] - $xoopsConfig['server_TZ'] ; ;
+    $useroffset = $xoopsConfig['default_TZ'] - $xoopsConfig['server_TZ'] ; ;
 }
 $isAdmin = $currentUser->isAdmin($xoopsModule->mid());
 $currentuid = $currentUser->getVar('uid');
@@ -71,27 +71,27 @@ $trackback_array = $tb_operator->handler->get( $entryObject->getVar('blog_id') )
   $trackback_transmit = array() ;
   $trackback_recieved = array() ;
 if( $trackback_array ){
-	foreach( $trackback_array as $trackback_obj ){
-		$trackback_data = array(
-		                                  "tb_url"=> $trackback_obj->getVar('tb_url'),
-										  "blog_name"=> $trackback_obj->getVar('blog_name'),
-										  "title"=> $trackback_obj->getVar('title'),
-										  "description"=> xoops_substr( $trackback_obj->getVar('description') , 0 , 120 ),
-										  "link"=> $trackback_obj->getVar('link'),
-										  "trackback_created"=> formatTimestamp($trackback_obj->getVar('trackback_created'), 'Y-m-d/H:i:s' , $xoopsConfig['default_TZ'])
-										  ) ;
-		if( $trackback_obj->getVar('direction') == "transmit" ){
-			$trackback_transmit[] = $trackback_data ;
-		}elseif( $trackback_obj->getVar('direction') == "recieved" ){
-			$trackback_recieved[] = $trackback_data ;
-		}
-	}
+    foreach( $trackback_array as $trackback_obj ){
+        $trackback_data = array(
+                                          "tb_url"=> $trackback_obj->getVar('tb_url'),
+                                          "blog_name"=> $trackback_obj->getVar('blog_name'),
+                                          "title"=> $trackback_obj->getVar('title'),
+                                          "description"=> xoops_substr( $trackback_obj->getVar('description') , 0 , 120 ),
+                                          "link"=> $trackback_obj->getVar('link'),
+                                          "trackback_created"=> formatTimestamp($trackback_obj->getVar('trackback_created'), 'Y-m-d/H:i:s' , $xoopsConfig['default_TZ'])
+                                          ) ;
+        if( $trackback_obj->getVar('direction') == "transmit" ){
+            $trackback_transmit[] = $trackback_data ;
+        }elseif( $trackback_obj->getVar('direction') == "recieved" ){
+            $trackback_recieved[] = $trackback_data ;
+        }
+    }
 }
 // (ex. IIS)
 if( (isset( $_SERVER['SERVER_SOFTWARE'] ) && preg_match("/Microsoft-IIS/i",$_SERVER['SERVER_SOFTWARE'])) || ! isset( $_SERVER['REQUEST_URI'] ) ){
-	$delimiter = "?" ;
+    $delimiter = "?" ;
 }else{
-	$delimiter = "/" ;
+    $delimiter = "/" ;
 }
 $weblog_trackback_url = XOOPS_URL.'/modules/'.$xoopsModule->dirname().'/weblog-tb.php' . $delimiter . $blog_id  ;
 
@@ -255,4 +255,3 @@ $xoopsTpl->assign('xoops_module_header', $weblog_head , $entryObject->getVar('us
 require XOOPS_ROOT_PATH.'/include/comment_view.php';
 
 include(XOOPS_ROOT_PATH.'/footer.php');
-?>

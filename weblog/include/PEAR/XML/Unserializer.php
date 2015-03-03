@@ -286,7 +286,7 @@ class XML_Unserializer extends PEAR
         }
 
         if ($this->options['returnResult'] === true) {
-        	$return = $this->_unserializedData;
+            $return = $this->_unserializedData;
         } else {
             $return = true;
         }
@@ -313,6 +313,7 @@ class XML_Unserializer extends PEAR
         if ($this->_root === null ) {
             return  $this->raiseError('No unserialized data available. Use XML_Unserializer::unserialize() first.', XML_UNSERIALIZER_ERROR_NO_UNSERIALIZATION);
         }
+
         return $this->_unserializedData;
     }
 
@@ -327,6 +328,7 @@ class XML_Unserializer extends PEAR
         if ($this->_root === null ) {
             return  $this->raiseError('No unserialized data available. Use XML_Unserializer::unserialize() first.', XML_UNSERIALIZER_ERROR_NO_UNSERIALIZATION);
         }
+
         return $this->_root;
     }
 
@@ -494,6 +496,7 @@ class XML_Unserializer extends PEAR
         if ($parent === null) {
             $this->_unserializedData = &$value['value'];
             $this->_root = &$value['name'];
+
             return true;
         } else {
             // parent has to be an array
@@ -560,7 +563,7 @@ class XML_Unserializer extends PEAR
         $this->_parser = new XML_Parser($this->options['encoding'], 'event', $this->options['targetEncoding']);
         $this->_parser->folding = false;
         $this->_parser->setHandlerObj($this);
+
         return true;
     }
 }
-?>

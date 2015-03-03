@@ -37,7 +37,7 @@ if( ! class_exists('WeblogCategoryBase') ){
 
 class WeblogCategoryBase extends XoopsObject {
 
-	var $mydirname='' ;		// abstruct
+    var $mydirname='' ;        // abstruct
 
     /**
      * Constructs an instance of this class
@@ -57,11 +57,11 @@ class WeblogCategoryBase extends XoopsObject {
 
 class WeblogCategoryHandlerBase extends XoopsObjectHandler {
 
-	var $mydirname='' ;		// abstruct
+    var $mydirname='' ;        // abstruct
     var $mytree;
 
     function &create() {
-        return new WeblogCategoryBase();	//abstruct
+        return new WeblogCategoryBase();    //abstruct
     }
 
     function &get($cat_id) {
@@ -73,16 +73,18 @@ class WeblogCategoryHandlerBase extends XoopsObjectHandler {
                 if ($this->db->getRowsNum($result)==1) {
                     $cat = $this->create();
                     $cat->assignVars($this->db->fetchArray($result));
+
                     return $cat;
                 }
             }
         }
+
         return false;
     }
 
     function insert(&$category) {
         if (strtolower(get_parent_class($category)) != 'weblogcategorybase') {  // must be lowercase only
-			return false;
+            return false;
         }
         if (!$category->isDirty()) {
             return true;
@@ -134,6 +136,7 @@ class WeblogCategoryHandlerBase extends XoopsObjectHandler {
         if (!$result = $this->db->queryF($sql)) {  // must be queryF()
             return false;
         }
+
         return true;
     }
 
@@ -146,6 +149,7 @@ class WeblogCategoryHandlerBase extends XoopsObjectHandler {
             return 0;
         }
         $count = $this->db->fetchArray($result);
+
         return $count['count'];
     }
 
@@ -177,6 +181,7 @@ class WeblogCategoryHandlerBase extends XoopsObjectHandler {
             }
             unset($category);
         }
+
         return $ret;
     }
 
@@ -193,6 +198,7 @@ class WeblogCategoryHandlerBase extends XoopsObjectHandler {
             $criteria->add(new criteria('cat_id', $sub), 'OR');
         }
         $subcat =& $this->getObjects($criteria);
+
         return $subcat;
     }
 
@@ -203,6 +209,7 @@ class WeblogCategoryHandlerBase extends XoopsObjectHandler {
         foreach($arr as $p) {
             $parents[] = $this->get($p);
         }
+
         return $parents;
     }
 
@@ -217,18 +224,20 @@ class WeblogCategoryHandlerBase extends XoopsObjectHandler {
         $mytree->makeMySelBox('cat_title', 'cat_title', $cat_id, $none, $sel_name);
         $selbox = ob_get_contents();
         ob_end_clean();
+
         return $selbox;
     }
 
     /**
-	 * @get category tree array
-	 * @returns array
-	 * created by hodaka
-	 */
-	 function getChildTreeArray($cat_id=0, $order="") {
-	 	$mytree =& $this->getTreeInstance();
-	 	return $mytree->getChildTreeArray($cat_id, $order);
-	 }
+     * @get category tree array
+     * @returns array
+     * created by hodaka
+     */
+     function getChildTreeArray($cat_id=0, $order="") {
+        $mytree =& $this->getTreeInstance();
+
+        return $mytree->getChildTreeArray($cat_id, $order);
+     }
 
     /**
      * @access private
@@ -238,145 +247,145 @@ class WeblogCategoryHandlerBase extends XoopsObjectHandler {
         if (!isset($instance)) {
             $instance = new wbXoopsTree($this->db->prefix($this->mydirname.'_category'), 'cat_id', 'cat_pid');
         }
+
         return $instance;
     }
 }
 
-
 class wbXoopsTree extends WeblogTree{
 
-	//constructor
-	function __constructor($table_name, $id_name, $pid_name){
-		$this->__construct($table_name, $id_name, $pid_name);
-	}
+    //constructor
+    function __constructor($table_name, $id_name, $pid_name){
+        $this->__construct($table_name, $id_name, $pid_name);
+    }
 
-	// override
-	function makeMySelBox($title,$order="",$preset_id=0, $none=0, $sel_name="", $onchange=""){
-		global $xoopsModule , $xoopsModuleConfig , $xoopsUser ;
+    // override
+    function makeMySelBox($title,$order="",$preset_id=0, $none=0, $sel_name="", $onchange=""){
+        global $xoopsModule , $xoopsModuleConfig , $xoopsUser ;
 
-		$modid = $xoopsModule->getVar('mid') ;
+        $modid = $xoopsModule->getVar('mid') ;
 
-		if ( $sel_name == "" ) {
-			$sel_name = $this->id;
-		}
-		$myts =& MyTextSanitizer::getInstance();
-		echo "<select name='".$sel_name."'";
-		if ( $onchange != "" ) {
-			echo " onchange='".$onchange."'";
-		}
-		echo ">\n";
-		// Admin or not using post permission ,show all categories
-		if( ( is_object($xoopsUser) && get_class($xoopsUser) == "xoopsuser" && $xoopsUser->isAdmin($modid) ) ||
-			 ( ! isset($xoopsModuleConfig['category_post_permission']) || ! $xoopsModuleConfig['category_post_permission'] ) ){
-			$sql = sprintf("SELECT %s, %s FROM %s WHERE %s=0 "
-		               , $this->id , $title , $this->table, $this->pid );
-		}else{
-			$sql = sprintf("SELECT %s, %s FROM %s, %s WHERE %s=0 "
-		                   , $this->id , $title , $this->table, $this->db->prefix('group_permission') , $this->pid );
-			$sql .= $this->weblog_cat_gpermsql();
-			$sql .= " group by cat_id " ;
-		}
-		if ( $order != "" ) {
-			$sql .= " ORDER BY $order";
-		}
+        if ( $sel_name == "" ) {
+            $sel_name = $this->id;
+        }
+        $myts =& MyTextSanitizer::getInstance();
+        echo "<select name='".$sel_name."'";
+        if ( $onchange != "" ) {
+            echo " onchange='".$onchange."'";
+        }
+        echo ">\n";
+        // Admin or not using post permission ,show all categories
+        if( ( is_object($xoopsUser) && get_class($xoopsUser) == "xoopsuser" && $xoopsUser->isAdmin($modid) ) ||
+             ( ! isset($xoopsModuleConfig['category_post_permission']) || ! $xoopsModuleConfig['category_post_permission'] ) ){
+            $sql = sprintf("SELECT %s, %s FROM %s WHERE %s=0 "
+                       , $this->id , $title , $this->table, $this->pid );
+        }else{
+            $sql = sprintf("SELECT %s, %s FROM %s, %s WHERE %s=0 "
+                           , $this->id , $title , $this->table, $this->db->prefix('group_permission') , $this->pid );
+            $sql .= $this->weblog_cat_gpermsql();
+            $sql .= " group by cat_id " ;
+        }
+        if ( $order != "" ) {
+            $sql .= " ORDER BY $order";
+        }
 //		$fp = fopen("/tmp/log.sql","a");
 //fputs($fp,$sql. $isadmin . "\n") ;
 $result = $this->db->query($sql);
-		if ( $none ) {
-			echo "<option value='0'>----</option>\n";
-		}
-		while ( list($catid, $name) = $this->db->fetchRow($result) ) {
-			$sel = "";
-			if ( $catid == $preset_id ) {
-				$sel = " selected='selected'";
-			}
-			echo "<option value='$catid'$sel>$name</option>\n";
-			$sel = "";
-			$arr = $this->getChildTreeArray($catid, $order);
-			foreach ( $arr as $option ) {
-				$option['prefix'] = str_replace(".","--",$option['prefix']);
-				$catpath = $option['prefix']."&nbsp;".$myts->htmlSpecialChars($option[$title]);
-				if ( $option[$this->id] == $preset_id ) {
-					$sel = " selected='selected'";
-				}
-				echo "<option value='".$option[$this->id]."'$sel>$catpath</option>\n";
-				$sel = "";
-			}
-		}
-		echo "</select>\n";
-	}
+        if ( $none ) {
+            echo "<option value='0'>----</option>\n";
+        }
+        while ( list($catid, $name) = $this->db->fetchRow($result) ) {
+            $sel = "";
+            if ( $catid == $preset_id ) {
+                $sel = " selected='selected'";
+            }
+            echo "<option value='$catid'$sel>$name</option>\n";
+            $sel = "";
+            $arr = $this->getChildTreeArray($catid, $order);
+            foreach ( $arr as $option ) {
+                $option['prefix'] = str_replace(".","--",$option['prefix']);
+                $catpath = $option['prefix']."&nbsp;".$myts->htmlSpecialChars($option[$title]);
+                if ( $option[$this->id] == $preset_id ) {
+                    $sel = " selected='selected'";
+                }
+                echo "<option value='".$option[$this->id]."'$sel>$catpath</option>\n";
+                $sel = "";
+            }
+        }
+        echo "</select>\n";
+    }
 
-	// override
-	function getChildTreeArray($sel_id=0,$order="",$parray = array(),$r_prefix=""){
-		global $xoopsModule , $xoopsModuleConfig , $xoopsUser ;
+    // override
+    function getChildTreeArray($sel_id=0,$order="",$parray = array(),$r_prefix=""){
+        global $xoopsModule , $xoopsModuleConfig , $xoopsUser ;
 
-		$modid = $xoopsModule->getVar('mid') ;
+        $modid = $xoopsModule->getVar('mid') ;
 
-		// Admin or not using post permission ,show all categories
-		if( ( is_object($xoopsUser) && get_class($xoopsUser) == "xoopsuser" && $xoopsUser->isAdmin($modid) ) ||
-			( ! isset($xoopsModuleConfig['category_post_permission']) || ! $xoopsModuleConfig['category_post_permission'] ) ){
-			$sql = sprintf("SELECT * FROM %s WHERE %s=%s "
-					        , $this->table, $this->pid , $sel_id ) ;
-		}else{
-			$sql = sprintf("SELECT * FROM %s, %s WHERE %s=%d " ,
-	                        $this->table , $this->db->prefix('group_permission') , $this->pid , $sel_id, $modid );
-			$sql .= $this->weblog_cat_gpermsql();
-			$sql .= " group by cat_id " ;
-		}
-		if ( $order != "" ) {
-			$sql .= " ORDER BY $order";
-		}
+        // Admin or not using post permission ,show all categories
+        if( ( is_object($xoopsUser) && get_class($xoopsUser) == "xoopsuser" && $xoopsUser->isAdmin($modid) ) ||
+            ( ! isset($xoopsModuleConfig['category_post_permission']) || ! $xoopsModuleConfig['category_post_permission'] ) ){
+            $sql = sprintf("SELECT * FROM %s WHERE %s=%s "
+                            , $this->table, $this->pid , $sel_id ) ;
+        }else{
+            $sql = sprintf("SELECT * FROM %s, %s WHERE %s=%d " ,
+                            $this->table , $this->db->prefix('group_permission') , $this->pid , $sel_id, $modid );
+            $sql .= $this->weblog_cat_gpermsql();
+            $sql .= " group by cat_id " ;
+        }
+        if ( $order != "" ) {
+            $sql .= " ORDER BY $order";
+        }
 //echo $sql ;
-		$result = $this->db->query($sql);
-		$count = $this->db->getRowsNum($result);
-		if ( $count == 0 ) {
-			return $parray;
-		}
-		while ( $row = $this->db->fetchArray($result) ) {
-			$row['prefix'] = $r_prefix.".";
-			array_push($parray, $row);
-			$parray = $this->getChildTreeArray($row[$this->id],$order,$parray,$row['prefix']);
-		}
-		return $parray;
-	}
+        $result = $this->db->query($sql);
+        $count = $this->db->getRowsNum($result);
+        if ( $count == 0 ) {
+            return $parray;
+        }
+        while ( $row = $this->db->fetchArray($result) ) {
+            $row['prefix'] = $r_prefix.".";
+            array_push($parray, $row);
+            $parray = $this->getChildTreeArray($row[$this->id],$order,$parray,$row['prefix']);
+        }
 
-	// create where phrase (in case of using category post permission system)
-	function weblog_cat_gpermsql(){
-		global $xoopsUser , $xoopsModule ;
+        return $parray;
+    }
 
-		$modid = $xoopsModule->getVar('mid') ;
+    // create where phrase (in case of using category post permission system)
+    function weblog_cat_gpermsql(){
+        global $xoopsUser , $xoopsModule ;
 
-		$whr_phrase = "" ;
-		// only post.php
-		if( basename($_SERVER['SCRIPT_NAME']) != "post.php" )
-			return "" ;
-		// get user groups
-		if( isset($xoopsUser) && get_class($xoopsUser) == "xoopsuser" ){
-			$currentuid = $xoopsUser->getVar('uid');
-			$currentusergroup = $xoopsUser->getGroups();
-			$isAdmin = $xoopsUser->isAdmin($modid);
-			if( $isAdmin )
-				return "" ;
-		}else{
-			$currentuid = 0 ;
-			$currentusergroup = array(XOOPS_GROUP_ANONYMOUS) ;
-			$isAdmin = false ;
-		}
-		foreach( $currentusergroup as $groupid ){
-			$whr_phrase .= sprintf(" gperm_groupid=%d or " , $groupid) ;
-		}
-		$whr_phrase = rtrim($whr_phrase , "or ") ;
+        $modid = $xoopsModule->getVar('mid') ;
 
-		return sprintf(" and gperm_modid=%d and cat_id=gperm_itemid and gperm_name='weblog_cat_post' " , $modid ) . " and (" . $whr_phrase . ") " ;
-	}
+        $whr_phrase = "" ;
+        // only post.php
+        if( basename($_SERVER['SCRIPT_NAME']) != "post.php" )
+            return "" ;
+        // get user groups
+        if( isset($xoopsUser) && get_class($xoopsUser) == "xoopsuser" ){
+            $currentuid = $xoopsUser->getVar('uid');
+            $currentusergroup = $xoopsUser->getGroups();
+            $isAdmin = $xoopsUser->isAdmin($modid);
+            if( $isAdmin )
+                return "" ;
+        }else{
+            $currentuid = 0 ;
+            $currentusergroup = array(XOOPS_GROUP_ANONYMOUS) ;
+            $isAdmin = false ;
+        }
+        foreach( $currentusergroup as $groupid ){
+            $whr_phrase .= sprintf(" gperm_groupid=%d or " , $groupid) ;
+        }
+        $whr_phrase = rtrim($whr_phrase , "or ") ;
+
+        return sprintf(" and gperm_modid=%d and cat_id=gperm_itemid and gperm_name='weblog_cat_post' " , $modid ) . " and (" . $whr_phrase . ") " ;
+    }
 }
 }
-
 
 // for module duplicate
 $entry_class =  strval(ucfirst($mydirname) . 'Category') ;
 if( ! defined($entry_class) ){
-	define($entry_class , 'DEFINED CLASS') ;
+    define($entry_class , 'DEFINED CLASS') ;
 
 eval('
 	class '. ucfirst($GLOBALS['mydirname']) .'Category extends WeblogCategoryBase{
@@ -396,5 +405,3 @@ eval('
 	}
 ') ;
 }
-
-?>

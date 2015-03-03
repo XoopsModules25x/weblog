@@ -152,4 +152,3 @@ define("_BL_ALBM_FILEERROR","Error: Photos are too big or some troubles about co
 define("_BL_ALBM_FILEREADERROR","Error: Photos are not readable.");
 
 }
-?>

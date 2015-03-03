@@ -36,5 +36,3 @@ define( "_BL_ALBM_CAPTION_IMAGEXYT" , "Size(Type)" ) ;
 define( "_BL_ALBM_CAPTION_CATEGORY" , "Category" ) ;
 
 }
-
-?>
