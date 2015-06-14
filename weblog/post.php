@@ -67,6 +67,7 @@ function &getEntry($post) {
         $entry->setVar('dohtml', empty($post['dohtml']) ? 1 : 0);
         $entry->setVar('dobr', empty($post['dobr']) ? 0 : 1);
     }
+
     return $entry;
 }
 
@@ -97,11 +98,6 @@ function weblog_confirm($hiddens, $action, $msg, $submit='', $back=false) {
     }
     echo '</div>';
 }
-
-
-
-
-
 
 if (is_object($xoopsUser)) {
     $currentUser = $xoopsUser;
@@ -401,7 +397,6 @@ if (!empty($_POST['post'])) {
                                                     $xoopsModuleConfig['editorwidth']), true);
 */
 
-
 //    $optionsTrayNote = new XoopsFormElementTray(_AM_NAR_NOTE, '<br />');
 if (class_exists('XoopsFormEditor')) {
         $options['name'] = 'contents';
@@ -418,8 +413,6 @@ if (class_exists('XoopsFormEditor')) {
 }
 
     $blog_form->addElement($formmnote );
-
-
 
     // add image manager
     if( isset($xoopsModuleConfig['use_imagemanager']) && $xoopsModuleConfig['use_imagemanager'] ){
@@ -577,4 +570,3 @@ if (class_exists('XoopsFormEditor')) {
   // Include the page footer
   include(XOOPS_ROOT_PATH.'/footer.php');
 }
-?>

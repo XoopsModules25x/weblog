@@ -473,6 +473,7 @@ class HTTP_Request {
             foreach ($value as $k => $v) {
                 $map[$k] = $this->_arrayMapRecursive($callback, $v);
             }
+
             return $map;
         }
     }
@@ -505,6 +506,7 @@ class HTTP_Request {
             'name' => $fileName,
             'type' => $contentType
         );
+
         return true;
     }
 
@@ -613,7 +615,6 @@ class HTTP_Request {
             AND $this->getResponseCode() < 399
             AND !empty($this->_response->_headers['location'])) {
 
-
             $redirect = $this->_response->_headers['location'];
 
             // Absolute URL
@@ -645,6 +646,7 @@ class HTTP_Request {
             }
 
             $this->_redirects++;
+
             return $this->sendRequest($saveBody);
 
         // Too many redirects
@@ -829,10 +831,10 @@ class HTTP_Request {
                 }
                 $ret = array_merge($ret, $this->_flattenArray($newName, $v));
             }
+
             return $ret;
         }
     }
-
 
    /**
     * Adds a Listener to the list of listeners that are notified of
@@ -848,9 +850,9 @@ class HTTP_Request {
             return false;
         }
         $this->_listeners[$listener->getId()] =& $listener;
+
         return true;
     }
-
 
    /**
     * Removes a Listener from the list of listeners
@@ -866,9 +868,9 @@ class HTTP_Request {
             return false;
         }
         unset($this->_listeners[$listener->getId()]);
+
         return true;
     }
-
 
    /**
     * Notifies all registered listeners of an event.
@@ -892,7 +894,6 @@ class HTTP_Request {
         }
     }
 }
-
 
 /**
 * Response class to complement the Request class
@@ -960,7 +961,6 @@ class HTTP_Response
         $this->_listeners =& $listeners;
     }
 
-
    /**
     * Processes a HTTP response
     *
@@ -1018,9 +1018,9 @@ class HTTP_Response
                 $this->_notify('gotBody');
             }
         }
+
         return true;
     }
-
 
    /**
     * Processes the response header
@@ -1041,7 +1041,6 @@ class HTTP_Response
             $this->_parseCookie($headervalue);
         }
     }
-
 
    /**
     * Parse a Set-Cookie header to fill $_cookies array
@@ -1093,7 +1092,6 @@ class HTTP_Response
         $this->_cookies[] = $cookie;
     }
 
-
    /**
     * Read a part of response body encoded with chunked Transfer-Encoding
     *
@@ -1121,9 +1119,9 @@ class HTTP_Response
         if (0 == $this->_chunkLength) {
             $this->_sock->readLine(); // Trailing CRLF
         }
+
         return $data;
     }
-
 
    /**
     * Notifies all registered listeners of an event.
@@ -1140,4 +1138,4 @@ class HTTP_Response
         }
     }
 } // End class HTTP_Response
-?>
+;

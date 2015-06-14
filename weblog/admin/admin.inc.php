@@ -48,4 +48,3 @@ function tableRow($title, $description, $action='', $hidden=array()) {
 
     return $html;
 }
-?>

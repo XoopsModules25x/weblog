@@ -211,4 +211,3 @@ define('_MI_WEBLOG_SEND_TO_ADMIN_DSC','');
 define('_MI_WEBLOG_SEND_ADDRESS','Mail address must be seperated by "|" if plural<br />send to admin if none');
 define('_MI_WEBLOG_SEND_ADDRESS_DSC','');
 }
-?>

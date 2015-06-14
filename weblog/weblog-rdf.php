@@ -55,8 +55,6 @@ foreach($results as $entryObject) {
   $item_data[] = $item ;
 }
 
-
-
 $options = array(
   "mode" => "simplexml" ,
   "indent"    => "    ",
@@ -72,7 +70,7 @@ $options = array(
        "xmlns:sy" => "http://purl.org/rss/1.0/modules/syndication/",
        "xmlns:admin" => "http://webns.net/mvcb/",
        "xmlns:content" => "http://purl.org/rss/1.0/modules/content/"
-	   ),
+       ),
   "defaultTagName" => "item",
   "attributesArray" => "_attributes"
 );
@@ -100,4 +98,3 @@ if (PEAR::isError($status)){
 
 header('Content-type: application/xml; charset=utf-8');
 echo $Serializer->getSerializedData();
-?>

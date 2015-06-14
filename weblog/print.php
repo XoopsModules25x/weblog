@@ -81,4 +81,3 @@ $tpl->assign('lang_parmalink', _BL_PARMALINK);
 $tpl->assign('parmalink', sprintf('%s/modules/%s/details.php?blog_id=%d', XOOPS_URL, $xoopsModule->dirname(), $blog_id));
 
 $tpl->display('db:weblog_print.html');
-?>

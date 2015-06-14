@@ -38,6 +38,7 @@ function getAllChildrenCount($currentuid, $cat_id, $user_id=0) {
     for ($i=0; $i<$size; $i++){
         $count += $weblog->getCountByCategory($currentuid, $arr[$i], $user_id);
     }
+
     return $count;
 }
 
@@ -45,7 +46,7 @@ function getAllChildrenCount($currentuid, $cat_id, $user_id=0) {
 $user_id = !empty($_GET['user_id']) ? intval($_GET['user_id']) : 0;
 $start = !empty($_GET['start']) ? intval($_GET['start']) : 0;
 $cat_id = !empty($_GET['cat_id']) ? intval($_GET['cat_id']) : 0;
-$date = !empty($_GET['date']) ? intval($_GET['date']) : 0;	// unixtime (archive.php is YYYYMM)
+$date = !empty($_GET['date']) ? intval($_GET['date']) : 0;    // unixtime (archive.php is YYYYMM)
 
 // privilege check
 include_once(sprintf('%s/modules/%s/include/privilege.inc.php', XOOPS_ROOT_PATH, $xoopsModule->dirname())) ;
@@ -62,11 +63,11 @@ $perPage = $xoopsModuleConfig['numperpage'];
 // Determine the user we are retrieving the blog entries for
 if (is_object($xoopsUser)) {
     $currentUser = $xoopsUser;
-	$useroffset = $xoopsUser->timezone() - $xoopsConfig['server_TZ'] ;
+    $useroffset = $xoopsUser->timezone() - $xoopsConfig['server_TZ'] ;
 } else {
     $currentUser = new XoopsUser();
     $currentUser->setVar('uid', 0);
-	$useroffset = $xoopsConfig['default_TZ'] - $xoopsConfig['server_TZ'] ; ;
+    $useroffset = $xoopsConfig['default_TZ'] - $xoopsConfig['server_TZ'] ; ;
 }
 $isAdmin = $currentUser->isAdmin($xoopsModule->mid());
 $currentuid = $currentUser->getVar('uid');
@@ -103,9 +104,9 @@ $count = $weblog->getCountByDate($currentuid, $cat_id, $user_id , $date, $userof
 // obtain entries
 //$result =& $weblog->getEntries($currentuid, $user_id, $start, $perPage);
 if( empty($date) ){
-	$weblog_result =& $weblog->getEntriesByCategory($currentuid, $cat_id, $user_id, $start, $perPage, 'DESC', $useroffset);
+    $weblog_result =& $weblog->getEntriesByCategory($currentuid, $cat_id, $user_id, $start, $perPage, 'DESC', $useroffset);
 }else{
-	$weblog_result =& $weblog->getEntriesForArchives($currentuid , $user_id , $date , $cat_id , $start , $perPage , 'DESC' , $useroffset ) ;
+    $weblog_result =& $weblog->getEntriesForArchives($currentuid , $user_id , $date , $cat_id , $start , $perPage , 'DESC' , $useroffset ) ;
 }
 $catresult =& $weblogcat->getCategoriesByParent($cat_id);
 
@@ -114,42 +115,41 @@ include_once(XOOPS_ROOT_PATH.'/header.php');
 
 // Category navigation
 if( $xoopsModuleConfig['show_category_list'] ){
-	$category_navi = array() ;
-	$cat_array = $weblogcat->getChildTreeArray(0, 'cat_title');
-	$cat_root_num = 0 ;	// flag for </tr>
-	foreach ( $cat_array as $cat ) {
-		$category = array();
-		$category['cat_id'] = $cat['cat_id'];
-		$category['cat_title'] = $myts->htmlSpecialChars($cat['cat_title']);
-		$category['count'] = $weblog->getCountByCategory($currentuid, $cat['cat_id'], $user_id);
-		$prefix_num = intval(strlen($cat['prefix']));
-		$category['prefix_num'] = $prefix_num ;	// flag for </td>
-		if( $prefix_num == 1 ){
-			$category['cat_root_num'] = $cat_root_num ;
-			$cat_root_num++ ;
-			$category['margin'] = "8px 4px 0px 0px" ;
-		}elseif( $prefix_num == 2 ){
-			$category['margin'] = "4px 4px 0px 0px" ;
-		}else{
-			$category['margin'] = "0px 0px 0px 4px" ;
-		}
-		$prefix_space = "" ;
-		$now = ($cat_id == $cat['cat_id'])? "_now" : "" ;
-		if( $prefix_num <= 3 ){
-			$category['prefix'] = sprintf("<img src='%s/modules/%s/images/cat%d%s.gif'>" , XOOPS_URL , $mydirname , $prefix_num , $now) ;
-		}else{
-			for( $i=3; $i<$prefix_num; $i++ ){
-				$prefix_space .= sprintf("<img src='%s/modules/%s/images/cat_space.gif'>" , XOOPS_URL , $mydirname )  ;
-			}
-				$category['prefix'] = $prefix_space . sprintf("<img src='%s/modules/%s/images/cat%d%s.gif'>" , XOOPS_URL , $mydirname , '3' , $now ) ;
-		}
-		$category_navi[] = $category;
-	}
-	$xoopsTpl->assign('category_col', $xoopsModuleConfig['category_col']);
-	$xoopsTpl->assign('category_navi', $category_navi);
+    $category_navi = array() ;
+    $cat_array = $weblogcat->getChildTreeArray(0, 'cat_title');
+    $cat_root_num = 0 ;    // flag for </tr>
+    foreach ( $cat_array as $cat ) {
+        $category = array();
+        $category['cat_id'] = $cat['cat_id'];
+        $category['cat_title'] = $myts->htmlSpecialChars($cat['cat_title']);
+        $category['count'] = $weblog->getCountByCategory($currentuid, $cat['cat_id'], $user_id);
+        $prefix_num = intval(strlen($cat['prefix']));
+        $category['prefix_num'] = $prefix_num ;    // flag for </td>
+        if( $prefix_num == 1 ){
+            $category['cat_root_num'] = $cat_root_num ;
+            $cat_root_num++ ;
+            $category['margin'] = "8px 4px 0px 0px" ;
+        }elseif( $prefix_num == 2 ){
+            $category['margin'] = "4px 4px 0px 0px" ;
+        }else{
+            $category['margin'] = "0px 0px 0px 4px" ;
+        }
+        $prefix_space = "" ;
+        $now = ($cat_id == $cat['cat_id'])? "_now" : "" ;
+        if( $prefix_num <= 3 ){
+            $category['prefix'] = sprintf("<img src='%s/modules/%s/images/cat%d%s.gif'>" , XOOPS_URL , $mydirname , $prefix_num , $now) ;
+        }else{
+            for( $i=3; $i<$prefix_num; $i++ ){
+                $prefix_space .= sprintf("<img src='%s/modules/%s/images/cat_space.gif'>" , XOOPS_URL , $mydirname )  ;
+            }
+                $category['prefix'] = $prefix_space . sprintf("<img src='%s/modules/%s/images/cat%d%s.gif'>" , XOOPS_URL , $mydirname , '3' , $now ) ;
+        }
+        $category_navi[] = $category;
+    }
+    $xoopsTpl->assign('category_col', $xoopsModuleConfig['category_col']);
+    $xoopsTpl->assign('category_navi', $category_navi);
 }
 $xoopsTpl->assign('show_category_list', $xoopsModuleConfig['show_category_list']);
-
 
 // add page navigator if # of entries bigger than # per page
 $totalPages = ceil($count / $perPage);
@@ -306,4 +306,3 @@ $xoopsTpl->assign('xoops_module_header', $weblog_head , $user_id );
 
 // Include the page footer
 include_once(XOOPS_ROOT_PATH.'/footer.php');
-?>

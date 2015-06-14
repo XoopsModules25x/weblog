@@ -113,7 +113,7 @@ class XML_Util {
     *
     * <code>
     * require_once 'XML/Util.php';
-    * 
+    *
     * // replace XML entites:
     * $string = XML_Util::replaceEntities("This string contains < & >.");
     * </code>
@@ -146,6 +146,7 @@ class XML_Util {
                 return htmlentities($string);
                 break;
         }
+
         return $string;
     }
 
@@ -157,7 +158,7 @@ class XML_Util {
     *
     * <code>
     * require_once 'XML/Util.php';
-    * 
+    *
     * // reverse XML entites:
     * $string = XML_Util::reverseEntities("This string contains &lt; &amp; &gt;.");
     * </code>
@@ -188,9 +189,11 @@ class XML_Util {
                 break;
             case XML_UTIL_ENTITIES_HTML:
                 $arr = array_flip(get_html_translation_table(HTML_ENTITIES));
+
                 return strtr($string, $arr);
                 break;
         }
+
         return $string;
     }
 
@@ -199,7 +202,7 @@ class XML_Util {
     *
     * <code>
     * require_once 'XML/Util.php';
-    * 
+    *
     * // get an XML declaration:
     * $xmlDecl = XML_Util::getXMLDeclaration("1.0", "UTF-8", true);
     * </code>
@@ -234,7 +237,7 @@ class XML_Util {
     *
     * <code>
     * require_once 'XML/Util.php';
-    * 
+    *
     * // get a doctype declaration:
     * $xmlDecl = XML_Util::getDocTypeDeclaration("rootTag","myDocType.dtd");
     * </code>
@@ -243,7 +246,7 @@ class XML_Util {
     * @static
     * @param    string  $root         name of the root tag
     * @param    string  $uri          uri of the doctype definition (or array with uri and public id)
-    * @param    string  $internalDtd  internal dtd entries   
+    * @param    string  $internalDtd  internal dtd entries
     * @return   string  $decl         doctype declaration
     * @since    0.2
     */
@@ -269,14 +272,14 @@ class XML_Util {
     *
     * <code>
     * require_once 'XML/Util.php';
-    * 
+    *
     * // build an attribute string
     * $att = array(
     *              "foo"   =>  "bar",
     *              "argh"  =>  "tomato"
     *            );
     *
-    * $attList = XML_Util::attributesToString($att);    
+    * $attList = XML_Util::attributesToString($att);
     * </code>
     *
     * @access   public
@@ -324,7 +327,7 @@ class XML_Util {
                 foreach ($attributes as $key => $value) {
                     if ($entities != XML_UTIL_ENTITIES_NONE) {
                         if ($entities === XML_UTIL_CDATA_SECTION) {
-                        	$entities = XML_UTIL_ENTITIES_XML;
+                            $entities = XML_UTIL_ENTITIES_XML;
                         }
                         $value = XML_Util::replaceEntities($value, $entities);
                     }
@@ -345,6 +348,7 @@ class XML_Util {
                 }
             }
         }
+
         return $string;
     }
 
@@ -381,7 +385,7 @@ class XML_Util {
     *
     * <code>
     * require_once 'XML/Util.php';
-    * 
+    *
     * // create an XML tag:
     * $tag = XML_Util::createTag("myNs:myTag", array("foo" => "bar"), "This is inside the tag", "http://www.w3c.org/myNs#");
     * </code>
@@ -436,7 +440,7 @@ class XML_Util {
     *
     * <code>
     * require_once 'XML/Util.php';
-    * 
+    *
     * $tag = array(
     *           "qname"        => "foo:bar",
     *           "namespaceUri" => "http://foo.com",
@@ -524,7 +528,8 @@ class XML_Util {
                     break;
             }
             $tag    =   sprintf('<%s%s>%s</%s>', $tag['qname'], $attList, $tag['content'], $tag['qname'] );
-        }        
+        }
+
         return  $tag;
     }
 
@@ -533,7 +538,7 @@ class XML_Util {
     *
     * <code>
     * require_once 'XML/Util.php';
-    * 
+    *
     * // create an XML start element:
     * $tag = XML_Util::createStartElement("myNs:myTag", array("foo" => "bar") ,"http://www.w3c.org/myNs#");
     * </code>
@@ -580,6 +585,7 @@ class XML_Util {
         // create attribute list
         $attList    =   XML_Util::attributesToString($attributes, true, $multiline, $indent, $linebreak);
         $element    =   sprintf("<%s%s>", $qname, $attList);
+
         return  $element;
     }
 
@@ -588,7 +594,7 @@ class XML_Util {
     *
     * <code>
     * require_once 'XML/Util.php';
-    * 
+    *
     * // create an XML start element:
     * $tag = XML_Util::createEndElement("myNs:myTag");
     * </code>
@@ -602,6 +608,7 @@ class XML_Util {
     function createEndElement($qname)
     {
         $element    =   sprintf("</%s>", $qname);
+
         return  $element;
     }
     
@@ -610,7 +617,7 @@ class XML_Util {
     *
     * <code>
     * require_once 'XML/Util.php';
-    * 
+    *
     * // create an XML start element:
     * $tag = XML_Util::createComment("I am a comment");
     * </code>
@@ -623,6 +630,7 @@ class XML_Util {
     function createComment($content)
     {
         $comment    =   sprintf("<!-- %s -->", $content);
+
         return  $comment;
     }
     
@@ -631,7 +639,7 @@ class XML_Util {
     *
     * <code>
     * require_once 'XML/Util.php';
-    * 
+    *
     * // create a CData section
     * $tag = XML_Util::createCDataSection("I am content.");
     * </code>
@@ -651,7 +659,7 @@ class XML_Util {
     *
     * <code>
     * require_once 'XML/Util.php';
-    * 
+    *
     * // split qualified tag
     * $parts = XML_Util::splitQualifiedName("xslt:stylesheet");
     * </code>
@@ -673,11 +681,13 @@ class XML_Util {
     {
         if (strstr($qname, ':')) {
             $tmp = explode(":", $qname);
+
             return array(
                           "namespace" => $tmp[0],
                           "localPart" => $tmp[1]
                         );
         }
+
         return array(
                       "namespace" => $defaultNs,
                       "localPart" => $qname
@@ -696,7 +706,7 @@ class XML_Util {
     *
     * <code>
     * require_once 'XML/Util.php';
-    * 
+    *
     * // verify tag name
     * $result = XML_Util::isValidName("invalidTag?");
     * if (XML_Util::isError($result)) {
@@ -743,4 +753,3 @@ class XML_Util {
         return PEAR::raiseError($msg, $code);
     }
 }
-?>

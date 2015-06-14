@@ -29,7 +29,6 @@ include('admin.inc.php');
 include_once(sprintf('%s/modules/%s/class/class.weblogtree.php', XOOPS_ROOT_PATH, $xoopsModule->dirname()));
 include_once dirname(__FILE__) . '/admin_header.php';
 
-
 $myts =& MyTextSanitizer::getInstance();
 $mytree = new WeblogTree($xoopsDB->prefix($mydirname . '_category'), 'cat_id', 'cat_pid');
 
@@ -57,16 +56,15 @@ switch ($action) {
         break;
 }
 
-
 /*
 if (isset($_POST)) {
-	foreach ($_POST as $k => $v) {
-		${$k} = $v;
-	}
+    foreach ($_POST as $k => $v) {
+        ${$k} = $v;
+    }
 }
 
 if (isset($_GET['action'])) {
-	$action = $_GET['action'];
+    $action = $_GET['action'];
 }
 */
 
@@ -95,7 +93,7 @@ function catManagerLink() {
 function catManager() {
     global $mytree , $xoopsModule , $xoopsModuleConfig ;
 
-	include_once(sprintf('%s/modules/%s/class/class.weblogcategories.php', XOOPS_ROOT_PATH, $xoopsModule->dirname()));
+    include_once(sprintf('%s/modules/%s/class/class.weblogcategories.php', XOOPS_ROOT_PATH, $xoopsModule->dirname()));
     include_once(sprintf('%s/modules/%s/admin/mygrouppermform.php', XOOPS_ROOT_PATH, $xoopsModule->dirname())) ;
     include_once(sprintf('%s/modules/%s/include/gtickets.php', XOOPS_ROOT_PATH, $xoopsModule->dirname())) ;
 
@@ -103,46 +101,45 @@ function catManager() {
 //    echo sprintf('<h4>%s&nbsp;&raquo;&raquo;&nbsp;%s</h4>', indexLink(), _AM_WEBLOG_CATMANAGER);
 
     $gperm_handler =& xoops_gethandler('groupperm');
-	$weblogcats =& WeblogCategories::getInstance();
+    $weblogcats =& WeblogCategories::getInstance();
 
 //    $mytree->makeMySelBox('cat_title', 'cat_title');
     $indexAdmin = new ModuleAdmin();
     echo $indexAdmin->addNavigation('catmanager.php');
 
+    include_once XOOPS_ROOT_PATH.'/class/xoopsformloader.php';
+    $form_add = new XoopsThemeForm(_AM_WEBLOG_ADDCAT, 'weblog_cat_form', 'catmanager.php');
+    $form_add->addElement(new XoopsFormText(_AM_WEBLOG_TITLE, 'cat_title', 50, 255, ''), true);
+    $form_add->addElement(new XoopsFormLabel(_AM_WEBLOG_PCAT, $weblogcats->getMySelectBox(0 , 1, 'cat_pid')) );
+    if( isset($xoopsModuleConfig['category_post_permission']) && $xoopsModuleConfig['category_post_permission'] ){
+        $form_add->addElement(new XoopsFormSelectGroup(_AM_WEBLOG_CAT_GPERM, 'postgroup', true, '' , 5, true));
+    }
+    $form_add->addElement(new XoopsFormHidden('action', 'addCat'));
+    $form_add->addElement(new XoopsFormButton('', 'catadd_button', _SUBMIT, 'submit'));
+    $form_add->display();
 
-	include_once XOOPS_ROOT_PATH.'/class/xoopsformloader.php';
-	$form_add = new XoopsThemeForm(_AM_WEBLOG_ADDCAT, 'weblog_cat_form', 'catmanager.php');
-	$form_add->addElement(new XoopsFormText(_AM_WEBLOG_TITLE, 'cat_title', 50, 255, ''), true);
-	$form_add->addElement(new XoopsFormLabel(_AM_WEBLOG_PCAT, $weblogcats->getMySelectBox(0 , 1, 'cat_pid')) );
-	if( isset($xoopsModuleConfig['category_post_permission']) && $xoopsModuleConfig['category_post_permission'] ){
-		$form_add->addElement(new XoopsFormSelectGroup(_AM_WEBLOG_CAT_GPERM, 'postgroup', true, '' , 5, true));
-	}
-	$form_add->addElement(new XoopsFormHidden('action', 'addCat'));
-	$form_add->addElement(new XoopsFormButton('', 'catadd_button', _SUBMIT, 'submit'));
-	$form_add->display();
+    $form_mod = new XoopsThemeForm(_AM_WEBLOG_MODCAT, 'weblog_cat_form', 'catmanager.php');
+    $form_mod->addElement(new XoopsFormLabel(_AM_WEBLOG_CAT, $weblogcats->getMySelectBox(0, 0, 'cat_id')));
+    $form_mod->addElement(new XoopsFormButton('', 'catmod_button', _AM_WEBLOG_GO, 'submit'));
+    $form_mod->addElement(new XoopsFormHidden('action', 'modCat'));
+    $form_mod->display();
 
-	$form_mod = new XoopsThemeForm(_AM_WEBLOG_MODCAT, 'weblog_cat_form', 'catmanager.php');
-	$form_mod->addElement(new XoopsFormLabel(_AM_WEBLOG_CAT, $weblogcats->getMySelectBox(0, 0, 'cat_id')));
-	$form_mod->addElement(new XoopsFormButton('', 'catmod_button', _AM_WEBLOG_GO, 'submit'));
-	$form_mod->addElement(new XoopsFormHidden('action', 'modCat'));
-	$form_mod->display();
+    // All category permit list
+    if( isset($xoopsModuleConfig['category_post_permission']) && $xoopsModuleConfig['category_post_permission'] ){
+        $wb_cat_array = $weblogcats->getChildTreeArray();
 
-	// All category permit list
-	if( isset($xoopsModuleConfig['category_post_permission']) && $xoopsModuleConfig['category_post_permission'] ){
-		$wb_cat_array = $weblogcats->getChildTreeArray();
+        $global_perms_array = array();
+        foreach( $wb_cat_array as $category_data ){
+            $global_perms_array[$category_data['cat_id']] = $category_data['cat_title'] ;
 
-		$global_perms_array = array();
-		foreach( $wb_cat_array as $category_data ){
-			$global_perms_array[$category_data['cat_id']] = $category_data['cat_title'] ;
-
-		}
-		$form_catgperm = new MyXoopsGroupPermForm( '' , $xoopsModule->mid() , 'weblog_cat_post' , "<br /><hr /><br /><h4>"._AM_WEBLOG_CAT_SETALL."</h4>" ) ;
-		foreach( $global_perms_array as $perm_id => $perm_name ) {
-			$form_catgperm->addItem( $perm_id , $perm_name ) ;
-		}
-		$form_catgperm->addElement(new XoopsFormHidden('action', 'modCatall')) ;
-		echo $form_catgperm->render() ;
-	}
+        }
+        $form_catgperm = new MyXoopsGroupPermForm( '' , $xoopsModule->mid() , 'weblog_cat_post' , "<br /><hr /><br /><h4>"._AM_WEBLOG_CAT_SETALL."</h4>" ) ;
+        foreach( $global_perms_array as $perm_id => $perm_name ) {
+            $form_catgperm->addItem( $perm_id , $perm_name ) ;
+        }
+        $form_catgperm->addElement(new XoopsFormHidden('action', 'modCatall')) ;
+        echo $form_catgperm->render() ;
+    }
 
 /*
     echo "<table width='100%' class='outer' cellspacing='1'>\r\n";
@@ -216,8 +213,8 @@ function delCategory($post, $get) {
             }
             $category =& $cat_handler->create();
             $category->setVar('cat_id', $id);
-            $cat_handler->delete($category);	// delete category
-            $gperm_handler->deleteByModule($xoopsModule->getVar('mid'), 'weblog_cat_post', $id) ;	// delete gperm
+            $cat_handler->delete($category);    // delete category
+            $gperm_handler->deleteByModule($xoopsModule->getVar('mid'), 'weblog_cat_post', $id) ;    // delete gperm
 /******
             xoops_notification_deleteitem($xoopsModule->getVar('mid'), 'category', $id);
 ******/
@@ -228,9 +225,9 @@ function delCategory($post, $get) {
 }
 
 function addCategory($post) {
-	global $xoopsModule ;
+    global $xoopsModule ;
 
-	$modid = $xoopsModule->getVar('mid') ;
+    $modid = $xoopsModule->getVar('mid') ;
 
     $cat = getCategory($post);
     if (strlen(trim($cat->getVar('cat_title', 'n')))<1) {
@@ -239,25 +236,25 @@ function addCategory($post) {
     }
     $cat->setVar('cat_created', time());
     $cat_handler =& xoops_getmodulehandler('category');
-    $ret = $cat_handler->insert($cat);	// insert category to weblog_category
-	if( $ret ){	// insert group_permission
-		$cat_id = $cat_handler->db->getInsertId();
-		$postgroup = $cat->vars['postgroup']['value'] ;
-		$ret_gperm = true ;
-		if( is_array($postgroup) && ! empty($postgroup) ){
-			$gperm_handler =& xoops_gethandler('groupperm');
-			foreach($postgroup as $group_id){
-				$gperm =& $gperm_handler->create();
-				$gperm->setVar('gperm_groupid', $group_id);
-				$gperm->setVar('gperm_name', "weblog_cat_post");
-				$gperm->setVar('gperm_modid', $modid);
-				$gperm->setVar('gperm_itemid', $cat_id);
-				if (!$gperm_handler->insert($gperm)) {
-					$ret_gperm = false ;
-				}
-			}
-		}
-	}
+    $ret = $cat_handler->insert($cat);    // insert category to weblog_category
+    if( $ret ){    // insert group_permission
+        $cat_id = $cat_handler->db->getInsertId();
+        $postgroup = $cat->vars['postgroup']['value'] ;
+        $ret_gperm = true ;
+        if( is_array($postgroup) && ! empty($postgroup) ){
+            $gperm_handler =& xoops_gethandler('groupperm');
+            foreach($postgroup as $group_id){
+                $gperm =& $gperm_handler->create();
+                $gperm->setVar('gperm_groupid', $group_id);
+                $gperm->setVar('gperm_name', "weblog_cat_post");
+                $gperm->setVar('gperm_modid', $modid);
+                $gperm->setVar('gperm_itemid', $cat_id);
+                if (!$gperm_handler->insert($gperm)) {
+                    $ret_gperm = false ;
+                }
+            }
+        }
+    }
 
     if ($ret && $ret_gperm) {
         redirect_header('catmanager.php', 2, _AM_WEBLOG_NEWCATADDED);
@@ -266,13 +263,11 @@ function addCategory($post) {
     }
 }
 
-
 function modifyCategoryAll(){
     global $xoopsModule , $xoopsUser ;
-	include_once(sprintf('%s/modules/%s/admin/mygroupperm.php', XOOPS_ROOT_PATH, $xoopsModule->dirname()));
-	redirect_header( XOOPS_URL."/modules/".$xoopsModule->dirname()."/admin/catmanager.php" , 3 , _AM_WEBLOG_GPERMUPDATED );
+    include_once(sprintf('%s/modules/%s/admin/mygroupperm.php', XOOPS_ROOT_PATH, $xoopsModule->dirname()));
+    redirect_header( XOOPS_URL."/modules/".$xoopsModule->dirname()."/admin/catmanager.php" , 3 , _AM_WEBLOG_GPERMUPDATED );
 }
-
 
 function modifyCategoryS($post) {
     global $xoopsModule ;
@@ -288,25 +283,25 @@ function modifyCategoryS($post) {
     $handler =& xoops_getmodulehandler('category');
     $ret = $handler->insert($cat);
 
-	if( $ret ){	// insert group_permission
-		$postgroup = $cat->vars['postgroup']['value'] ;
-		$ret_gperm = true ;
-		if( is_array($postgroup) && ! empty($postgroup) ){
-			$gperm_handler = xoops_gethandler('groupperm');
-			if( false != $gperm_handler->deleteByModule($modid, 'weblog_cat_post', $cat->getVar('cat_id')) ){
-				foreach($postgroup as $group_id){
-					$gperm =& $gperm_handler->create();
-					$gperm->setVar('gperm_groupid', $group_id);
-					$gperm->setVar('gperm_name', "weblog_cat_post");
-					$gperm->setVar('gperm_modid', $modid);
-					$gperm->setVar('gperm_itemid', $cat->getVar('cat_id'));
-					if (!$gperm_handler->insert($gperm)) {
-						$ret_gperm = false ;
-					}
-				}
-			}
-		}
-	}
+    if( $ret ){    // insert group_permission
+        $postgroup = $cat->vars['postgroup']['value'] ;
+        $ret_gperm = true ;
+        if( is_array($postgroup) && ! empty($postgroup) ){
+            $gperm_handler = xoops_gethandler('groupperm');
+            if( false != $gperm_handler->deleteByModule($modid, 'weblog_cat_post', $cat->getVar('cat_id')) ){
+                foreach($postgroup as $group_id){
+                    $gperm =& $gperm_handler->create();
+                    $gperm->setVar('gperm_groupid', $group_id);
+                    $gperm->setVar('gperm_name', "weblog_cat_post");
+                    $gperm->setVar('gperm_modid', $modid);
+                    $gperm->setVar('gperm_itemid', $cat->getVar('cat_id'));
+                    if (!$gperm_handler->insert($gperm)) {
+                        $ret_gperm = false ;
+                    }
+                }
+            }
+        }
+    }
     if ($ret && $ret_gperm) {
         redirect_header('catmanager.php', 2, _AM_WEBLOG_CATMODED);
     } else {
@@ -328,36 +323,35 @@ function modifyCategory($post) {
         $count = $cathandler->getCount();
         $weblogcats =& WeblogCategories::getInstance();
         $wb_cat =& $cathandler->get($cat_id) ;
-		$cat_pid = $wb_cat->getVar('cat_pid');
-		$cat_title = $wb_cat->getVar('cat_title','s');
+        $cat_pid = $wb_cat->getVar('cat_pid');
+        $cat_title = $wb_cat->getVar('cat_title','s');
     }else{
         redirect_header('catmanager.php', 2, _AM_WEBLOG_CATNOTMODED);
-		exit() ;
-	}
+        exit() ;
+    }
 
     xoops_cp_header();
 
     echo sprintf('<h4>%s&nbsp;&raquo;&raquo;&nbsp;%s&nbsp;&raquo;&raquo;&nbsp;%s</h4>',
                  indexLink(), catManagerLink(), _AM_WEBLOG_MODCAT);
 
-	include_once XOOPS_ROOT_PATH.'/class/xoopsformloader.php';
-	$form_add = new XoopsThemeForm(_AM_WEBLOG_MODCAT, 'weblog_cat_form', 'catmanager.php') ;
-	$form_add->addElement(new XoopsFormLabel(_AM_WEBLOG_CHOSECAT, $cat_title ) );
-	$form_add->addElement(new XoopsFormText(_AM_WEBLOG_TITLE, 'cat_title', 50, 255, $cat_title), true);
-	$form_add->addElement(new XoopsFormLabel(_AM_WEBLOG_PCAT, $weblogcats->getMySelectBox($cat_pid, 1, 'cat_pid')) );
-	if( isset($xoopsModuleConfig['category_post_permission']) && $xoopsModuleConfig['category_post_permission'] ){
-		$form_add->addElement(new XoopsFormSelectGroup(_AM_WEBLOG_CAT_GPERM, 'postgroup', true, $gperm_handler->getGroupIds('weblog_cat_post', $cat_id, $modid), 5, true));
-	}
-	$form_add->addElement(new XoopsFormHidden('cat_id', $cat_id));
-	$form_add->addElement(new XoopsFormHidden('action', 'modCatS'));
-	$form_add->addElement(new XoopsFormLabel(_AM_WEBLOG_CAT_OPERATE, sprintf('<input type=submit value=\'%s\'>', _AM_WEBLOG_MODIFY) . "&nbsp;" .
+    include_once XOOPS_ROOT_PATH.'/class/xoopsformloader.php';
+    $form_add = new XoopsThemeForm(_AM_WEBLOG_MODCAT, 'weblog_cat_form', 'catmanager.php') ;
+    $form_add->addElement(new XoopsFormLabel(_AM_WEBLOG_CHOSECAT, $cat_title ) );
+    $form_add->addElement(new XoopsFormText(_AM_WEBLOG_TITLE, 'cat_title', 50, 255, $cat_title), true);
+    $form_add->addElement(new XoopsFormLabel(_AM_WEBLOG_PCAT, $weblogcats->getMySelectBox($cat_pid, 1, 'cat_pid')) );
+    if( isset($xoopsModuleConfig['category_post_permission']) && $xoopsModuleConfig['category_post_permission'] ){
+        $form_add->addElement(new XoopsFormSelectGroup(_AM_WEBLOG_CAT_GPERM, 'postgroup', true, $gperm_handler->getGroupIds('weblog_cat_post', $cat_id, $modid), 5, true));
+    }
+    $form_add->addElement(new XoopsFormHidden('cat_id', $cat_id));
+    $form_add->addElement(new XoopsFormHidden('action', 'modCatS'));
+    $form_add->addElement(new XoopsFormLabel(_AM_WEBLOG_CAT_OPERATE, sprintf('<input type=submit value=\'%s\'>', _AM_WEBLOG_MODIFY) . "&nbsp;" .
                                                  sprintf('<input type=button value=\'%s\' onClick="location=\'catmanager.php?cat_pid=%d&amp;cat_id=%d&amp;action=delCat\'">',
                                                           _AM_WEBLOG_DELETE, $wb_cat->getVar('cat_pid'), $wb_cat->getVar('cat_id') ) . "&nbsp;" .
                                                  sprintf('<input type=button value="%s"  onclick="location=\'catmanager.php\'" />', _AM_WEBLOG_CANCEL)
-	));
+    ));
 
-
-	$form_add->display();
+    $form_add->display();
 
     include_once dirname(__FILE__) . '/admin_footer.php';
 }

@@ -23,13 +23,11 @@
  * Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307 USA
  */
 
-
 if( ! defined( 'XOOPS_ROOT_PATH' ) ) exit ;
 
 $mydirname = basename( dirname( dirname( __FILE__ ) ) );
 if( ! preg_match( '/^(\D+)(\d*)$/' , $mydirname , $regs ) ) die ( "invalid dirname: " . htmlspecialchars( $mydirname ) ) ;
 $mydirnumber = $regs[2] === '' ? '' : intval( $regs[2] ) ;
-
 
 eval('
 function blog'.$mydirnumber.'_info($category, $item_id)
@@ -38,13 +36,12 @@ function blog'.$mydirnumber.'_info($category, $item_id)
 }
 ') ;
 
-
 //function blog'.$mydirnumber.'_info_base( $mydirname, $category, $item_id )
 function blog_info_base( $mydirname, $category, $item_id )
 {
   global $xoopsModule, $xoopsModuleConfig, $xoopsConfig;
   
-  if (empty($xoopsModule) || $xoopsModule->getVar("dirname") != $mydirname) {	
+  if (empty($xoopsModule) || $xoopsModule->getVar("dirname") != $mydirname) {
     $module_handler =& xoops_gethandler("module");
     $module =& $module_handler->getByDirname($mydirname);
     $config_handler =& xoops_gethandler("config");
@@ -59,6 +56,7 @@ function blog_info_base( $mydirname, $category, $item_id )
   if ($category=="global") {
     $item["name"] = "";
     $item["url"] = "";
+
     return $item;
   }
   
@@ -70,6 +68,7 @@ function blog_info_base( $mydirname, $category, $item_id )
     $result_array = $xoopsDB->fetchArray($result);
     $item["name"] = sprintf(_BL_WHOS_BLOG, $result_array["uname"]);
     $item["url"] = XOOPS_URL . "/modules/" . $module->getVar("dirname") . "/index.php?user_id=" . $item_id;
+
     return $item;
   } else if ($category=="blog_entry") {
     // Assume we have a valid forum id
@@ -78,8 +77,7 @@ function blog_info_base( $mydirname, $category, $item_id )
     $result_array = $xoopsDB->fetchArray($result);
     $item["name"] = $result_array["title"];
     $item["url"] = XOOPS_URL . "/modules/" . $mydirname . "/details.php?blog_id=" . $item_id;
+
     return $item;
   }
 }
-
-?>

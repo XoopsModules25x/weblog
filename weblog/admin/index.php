@@ -18,13 +18,12 @@
  * @version    $Id $
  */
 
-
 require_once dirname(dirname(dirname(dirname(__FILE__)))) . '/include/cp_header.php';
 include_once dirname(__FILE__) . '/admin_header.php';
 
 xoops_cp_header();
 
-	$indexAdmin = new ModuleAdmin();
+    $indexAdmin = new ModuleAdmin();
 
 //------ check directories ---------------
 include_once dirname(dirname(__FILE__)) . '/include/directorychecker.php';
@@ -38,13 +37,11 @@ $languageConstants = array(_AM_WEBLOG_AVAILABLE2,_AM_WEBLOG_NOTAVAILABLE2, _AM_W
 //      		}
 
 
-
 $path =  XOOPS_ROOT_PATH . $xoopsModuleConfig['weblog_myalbum_photospath'] . '/';
 $indexAdmin->addConfigBoxLine(DirectoryChecker::getDirectoryStatus($path ,0777,$languageConstants,$redirectFile));
 
 $path = XOOPS_ROOT_PATH . $xoopsModuleConfig['weblog_myalbum_thumbspath'] . '/';
 $indexAdmin->addConfigBoxLine(DirectoryChecker::getDirectoryStatus($path ,0777,$languageConstants,$redirectFile));
-
 
 /*
 //$path = XOOPS_ROOT_PATH . '/' . $xoopsModuleConfig['catimage'] . '/';
@@ -67,10 +64,7 @@ $indexAdmin->addConfigBoxLine(DirectoryChecker::getDirectoryStatus(WEBLOG_TEXT_P
 //---------------------------
 */
 
-
-		echo $indexAdmin->addNavigation('index.php');
-		echo $indexAdmin->renderIndex();
-
-
+        echo $indexAdmin->addNavigation('index.php');
+        echo $indexAdmin->renderIndex();
 
 include "admin_footer.php";

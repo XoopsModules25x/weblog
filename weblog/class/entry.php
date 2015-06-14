@@ -34,7 +34,7 @@ if( ! class_exists('WeblogEntryBase') ){
 
 class WeblogEntryBase extends XoopsObject {
 
-	var $mydirname='' ;		// abstruct
+    var $mydirname='' ;        // abstruct
     /**
      * Constructs an instance of this class
      */
@@ -89,122 +89,123 @@ class WeblogEntryBase extends XoopsObject {
     }
 
     function &getVar($key, $format='s', $blog_id=0 , $contents_mode=false){
-		if( ! ($key == 'contents' && $contents_mode) ) {
-			$ret = parent::getVar($key , $format) ;
+        if( ! ($key == 'contents' && $contents_mode) ) {
+            $ret = parent::getVar($key , $format) ;
+
             return $ret;
         }
 
-		$contents = parent::getVar($key, $format) ;
-		$ret = $this->parse_viewmode( $contents , $blog_id ,$contents_mode , $this->mydirname) ;
+        $contents = parent::getVar($key, $format) ;
+        $ret = $this->parse_viewmode( $contents , $blog_id ,$contents_mode , $this->mydirname) ;
+
         return $ret;
 
-	}
+    }
 
-	// parse entry->content in case of using separator functions
-	function parse_viewmode( $contents , $blog_id ,$contents_mode="details" , $mydirname=''){
-		global $xoopsUser , $xoopsModuleConfig , $xoopsModule , $xoopsConfig ;
+    // parse entry->content in case of using separator functions
+    function parse_viewmode( $contents , $blog_id ,$contents_mode="details" , $mydirname=''){
+        global $xoopsUser , $xoopsModuleConfig , $xoopsModule , $xoopsConfig ;
 
-		$mydirname = ( empty($mydirname) ) ? $this->mydirname : $mydirname ;
-		include_once(sprintf('%s/modules/%s/config.php', XOOPS_ROOT_PATH, $mydirname )) ;
+        $mydirname = ( empty($mydirname) ) ? $this->mydirname : $mydirname ;
+        include_once(sprintf('%s/modules/%s/config.php', XOOPS_ROOT_PATH, $mydirname )) ;
 
-		// if not allowed
-	    if( preg_match("/^GROUP_PERMIT$/",$contents) ){
-	        return _BL_GROUP_PERMIT ;
-	    }
+        // if not allowed
+        if( preg_match("/^GROUP_PERMIT$/",$contents) ){
+            return _BL_GROUP_PERMIT ;
+        }
 
-		// get weblog Module Config if not.
-		if( ! isset($xoopsModuleConfig['minentrysize']) ){	// this config is sapmle.
-			include_once(sprintf('%s/modules/%s/language/%s/main.php', XOOPS_ROOT_PATH, $mydirname, $xoopsConfig['language'] )) ;
-			$module_h =& xoops_gethandler('module') ;
-			$module =& $module_h->getByDirname($mydirname) ;
-			$config_h =& xoops_gethandler('config') ;
-			$tmp_xoopsModuleConfig = $xoopsModuleConfig ;
-			$xoopsModuleConfig = $config_h->getConfigsByCat(0, $module->getVar('mid'));
-		}
+        // get weblog Module Config if not.
+        if( ! isset($xoopsModuleConfig['minentrysize']) ){    // this config is sapmle.
+            include_once(sprintf('%s/modules/%s/language/%s/main.php', XOOPS_ROOT_PATH, $mydirname, $xoopsConfig['language'] )) ;
+            $module_h =& xoops_gethandler('module') ;
+            $module =& $module_h->getByDirname($mydirname) ;
+            $config_h =& xoops_gethandler('config') ;
+            $tmp_xoopsModuleConfig = $xoopsModuleConfig ;
+            $xoopsModuleConfig = $config_h->getConfigsByCat(0, $module->getVar('mid'));
+        }
 
-		if (empty($xoopsModule) || ( get_class($xoopsModule)=="xoopsmodule" && $xoopsModule->dirname()!=$mydirname )) {	// for using block
-			$mod_handler =& xoops_gethandler('module');
-			$wbModule =& $mod_handler->getByDirname( $mydirname );
-		}else{
-			$wbModule =& $xoopsModule ;
-		}
-		// check user
-		if( isset($xoopsUser) && get_class($xoopsUser) == "xoopsuser" ){
-			$currentuid = $xoopsUser->getVar('uid');
+        if (empty($xoopsModule) || ( get_class($xoopsModule)=="xoopsmodule" && $xoopsModule->dirname()!=$mydirname )) {    // for using block
+            $mod_handler =& xoops_gethandler('module');
+            $wbModule =& $mod_handler->getByDirname( $mydirname );
+        }else{
+            $wbModule =& $xoopsModule ;
+        }
+        // check user
+        if( isset($xoopsUser) && get_class($xoopsUser) == "xoopsuser" ){
+            $currentuid = $xoopsUser->getVar('uid');
 //			$currentusergroup = $xoopsUser->getGroups();
-			$isAdmin = $xoopsUser->isAdmin($wbModule->mid());
-		}else{
-			$currentuid = 0 ;
+            $isAdmin = $xoopsUser->isAdmin($wbModule->mid());
+        }else{
+            $currentuid = 0 ;
 //			$currentusergroup = array(XOOPS_GROUP_ANONYMOUS) ;
-			$isAdmin = false ;
-		}
+            $isAdmin = false ;
+        }
 
-		switch( $contents_mode ){
-	        case "rss" :
-	        case "trackback" :
-	            $contents = preg_replace("/(". MEMBER_ONLY_READ_DELIMETER . ").*$/sm" , "" , $contents ) ;
-	            $contents = str_replace( _BL_ENTRY_SEPARATOR_DELIMETER , "" , $contents ) ;
-	            break ;
+        switch( $contents_mode ){
+            case "rss" :
+            case "trackback" :
+                $contents = preg_replace("/(". MEMBER_ONLY_READ_DELIMETER . ").*$/sm" , "" , $contents ) ;
+                $contents = str_replace( _BL_ENTRY_SEPARATOR_DELIMETER , "" , $contents ) ;
+                break ;
 
-	        case "details" :	// parse member limit and erase first-last half separator
-	            // member or not change entry text
-	            if( $currentuid ){
-	                $contents = str_replace( MEMBER_ONLY_READ_DELIMETER , "" , $contents ) ;
-	            }else{
-	                $contents = preg_replace("/(". MEMBER_ONLY_READ_DELIMETER . ").*$/sm" ,
-	                                               "<br /><br /><a href='" . XOOPS_URL . WEBLOG_REGISTER_LEADING_PAGE ."'>" ._BL_MEMBER_ONLY_READ_MORE . "</a><br />\n" ,
-	                                               $contents ) ;
-	            }
-	            // strip entry division separator
-	            $contents = str_replace( _BL_ENTRY_SEPARATOR_DELIMETER , "" , $contents ) ;
-	            break ;
+            case "details" :    // parse member limit and erase first-last half separator
+                // member or not change entry text
+                if( $currentuid ){
+                    $contents = str_replace( MEMBER_ONLY_READ_DELIMETER , "" , $contents ) ;
+                }else{
+                    $contents = preg_replace("/(". MEMBER_ONLY_READ_DELIMETER . ").*$/sm" ,
+                                                   "<br /><br /><a href='" . XOOPS_URL . WEBLOG_REGISTER_LEADING_PAGE ."'>" ._BL_MEMBER_ONLY_READ_MORE . "</a><br />\n" ,
+                                                   $contents ) ;
+                }
+                // strip entry division separator
+                $contents = str_replace( _BL_ENTRY_SEPARATOR_DELIMETER , "" , $contents ) ;
+                break ;
 
-	        case "index" :	// parse member limit and first-last half
-	            // member or not change entry text
-	            if( isset($xoopsModuleConfig['use_memberonly']) && $xoopsModuleConfig['use_memberonly'] && ! $currentuid ){
-	                $contents = preg_replace("/(". MEMBER_ONLY_READ_DELIMETER . ").*$/sm" ,
-	                                               "<br /><br /><a href='" . XOOPS_URL . WEBLOG_REGISTER_LEADING_PAGE . "'>" ._BL_MEMBER_ONLY_READ_MORE . "</a><br />\n" ,
-	                                               $contents ) ;
-	            }else{
-	                $contents = str_replace( MEMBER_ONLY_READ_DELIMETER , "" , $contents ) ;
-	            }
+            case "index" :    // parse member limit and first-last half
+                // member or not change entry text
+                if( isset($xoopsModuleConfig['use_memberonly']) && $xoopsModuleConfig['use_memberonly'] && ! $currentuid ){
+                    $contents = preg_replace("/(". MEMBER_ONLY_READ_DELIMETER . ").*$/sm" ,
+                                                   "<br /><br /><a href='" . XOOPS_URL . WEBLOG_REGISTER_LEADING_PAGE . "'>" ._BL_MEMBER_ONLY_READ_MORE . "</a><br />\n" ,
+                                                   $contents ) ;
+                }else{
+                    $contents = str_replace( MEMBER_ONLY_READ_DELIMETER , "" , $contents ) ;
+                }
 
+                // entry division separator
+                if( isset($xoopsModuleConfig['use_separator']) && $xoopsModuleConfig['use_separator'] ){
+                    $weblog_division_next_string = sprintf( "<br /><br /><a href=\"%s/modules/%s/details.php?blog_id=%d\">%s</a><br />\n" ,
+                                                             XOOPS_URL , $mydirname , $blog_id , _BL_ENTRY_SEPARATOR_NEXT );
+                    $contents = preg_replace("/(". _BL_ENTRY_SEPARATOR_DELIMETER . ").*$/sm" ,
+                                                       $weblog_division_next_string , $contents ) ;
+                }else{
+                    $contents = str_replace( _BL_ENTRY_SEPARATOR_DELIMETER , "" , $contents ) ;
+                }
+                break ;
+            case "post":    // nothing
+                break ;
+            default :
+        }
+        // turn back $xoopsModuleConfig
+        if( isset($tmp_xoopsModuleConfig) ){
+            $xoopsModuleConfig = $tmp_xoopsModuleConfig ;
+        }
 
-
-	            // entry division separator
-	            if( isset($xoopsModuleConfig['use_separator']) && $xoopsModuleConfig['use_separator'] ){
-	                $weblog_division_next_string = sprintf( "<br /><br /><a href=\"%s/modules/%s/details.php?blog_id=%d\">%s</a><br />\n" ,
-	                                                         XOOPS_URL , $mydirname , $blog_id , _BL_ENTRY_SEPARATOR_NEXT );
-	                $contents = preg_replace("/(". _BL_ENTRY_SEPARATOR_DELIMETER . ").*$/sm" ,
-	                                                   $weblog_division_next_string , $contents ) ;
-	            }else{
-	                $contents = str_replace( _BL_ENTRY_SEPARATOR_DELIMETER , "" , $contents ) ;
-	            }
-	            break ;
-	        case "post":	// nothing
-	            break ;
-			default :
-		}
-		// turn back $xoopsModuleConfig
-		if( isset($tmp_xoopsModuleConfig) ){
-			$xoopsModuleConfig = $tmp_xoopsModuleConfig ;
-		}
-		return $contents ;
-	}
-}	// end of class
+        return $contents ;
+    }
+}    // end of class
 
 class WeblogEntryHandlerBase extends XoopsObjectHandler {
 
-	var $mydirname='' ;	// abstruct
+    var $mydirname='' ;    // abstruct
 
     function &create() {
-        return new WeblogEntryBase();	// abstruct
+        return new WeblogEntryBase();    // abstruct
     }
 
     function &get($blog_id) {
         $blog_id = intval($blog_id);
-		// use permission system or show title ?
-		list( $bl_contents_field , $permission_group_sql ) = weblog_create_permissionsql() ;
+        // use permission system or show title ?
+        list( $bl_contents_field , $permission_group_sql ) = weblog_create_permissionsql() ;
         if ($blog_id > 0 ) {
             $sql = sprintf('SELECT bl.blog_id, bl.user_id, bl.cat_id, bl.created, bl.title, %s as contents, bl.private, bl.comments, bl.`reads`, bl.dohtml, bl.dobr, bl.trackbacks, bl.permission_group, u.uname, u.user_avatar FROM %s as bl, %s as u WHERE blog_id=%d AND bl.user_id=u.uid %s',
                            $bl_contents_field ,
@@ -215,10 +216,12 @@ class WeblogEntryHandlerBase extends XoopsObjectHandler {
                     $result =
                     $entry = $this->create();
                     $entry->assignVars($this->db->fetchArray($result));
+
                     return $entry;
                 }
             }
         }
+
         return false;
     }
 
@@ -260,25 +263,25 @@ class WeblogEntryHandlerBase extends XoopsObjectHandler {
             }
 
             if ($blog_id > 0 && $count > 0) {
-                $permission_group_field = ", permission_group=" ;	// update
+                $permission_group_field = ", permission_group=" ;    // update
                 $permission_group_value = $this->db->quoteString($permission_group_value) ;
             }else{
-                $permission_group_field = ", permission_group" ;	// insert
+                $permission_group_field = ", permission_group" ;    // insert
                 $permission_group_value = ", " . $this->db->quoteString($permission_group_value) ;
             }
         }else{
                 $permission_group_field = "" ;
                 $permission_group_value = "" ;
         }
-		// when not specify created time
-		if( empty($specify_created) ){
+        // when not specify created time
+        if( empty($specify_created) ){
             if ($blog_id > 0 && $count > 0) {
-				$created = "created" ;	// update
-			}else{
-				$created = time() ;	// insert
-			}
-		}
-		// create sql
+                $created = "created" ;    // update
+            }else{
+                $created = time() ;    // insert
+            }
+        }
+        // create sql
         if ($blog_id > 0 && $count > 0) {
             $sql = sprintf('UPDATE %s SET user_id=%d, cat_id=%d, created=%s, title=%s, contents=%s, private=%s, dohtml=%d, dobr=%d %s WHERE blog_id=%d',
                            $this->db->prefix($this->mydirname),
@@ -307,11 +310,11 @@ class WeblogEntryHandlerBase extends XoopsObjectHandler {
 
         if (empty($blog_id)) {
             $entry->setVar('blog_id', $this->db->getInsertId());
-			// count up user post
-			if( $xoopsModuleConfig['userpost_countup'] ){
-				$sql = sprintf('update %s set posts=posts+1 where uid=%d', $this->db->prefix('users'), $user_id) ;
-				$this->db->query($sql) ;
-			}
+            // count up user post
+            if( $xoopsModuleConfig['userpost_countup'] ){
+                $sql = sprintf('update %s set posts=posts+1 where uid=%d', $this->db->prefix('users'), $user_id) ;
+                $this->db->query($sql) ;
+            }
         }
 
         return true;
@@ -327,6 +330,7 @@ class WeblogEntryHandlerBase extends XoopsObjectHandler {
         if (!$result = $this->db->query($sql)) {  // must be query()
             return false;
         }
+
         return true;
     }
 
@@ -339,21 +343,22 @@ class WeblogEntryHandlerBase extends XoopsObjectHandler {
             return 0;
         }
         $count = $this->db->fetchArray($result);
+
         return $count['count'];
     }
 
     function &getObjects($criteria=null, $id_as_key=false, $contents_mode="detail", $useroffset=0) {
         $ret = array();
         $limit = $start = 0;
-		// use permission system or show title ?
-		list( $bl_contents_field , $permission_group_sql ) = weblog_create_permissionsql() ;
-		// sql main
+        // use permission system or show title ?
+        list( $bl_contents_field , $permission_group_sql ) = weblog_create_permissionsql() ;
+        // sql main
         $sql = sprintf('SELECT bl.blog_id, bl.user_id, bl.cat_id, bl.created+%d as created, bl.title, %s as contents, bl.private, bl.comments, bl.`reads`, bl.trackbacks, bl.permission_group, bl.dohtml, bl.dobr, bl.trackbacks, u.uname, u.user_avatar FROM %s as bl, %s as u ',
                        $useroffset*3600 ,
                        $bl_contents_field ,
                        $this->db->prefix($this->mydirname) ,
                        $this->db->prefix('users') );
-		// criteria
+        // criteria
         if (isset($criteria) && is_subclass_of($criteria, 'criteriaelement')) {
             $sql .= sprintf(' %s %s %s', $criteria->renderWhere(), 'AND bl.user_id=u.uid ' , $permission_group_sql );
             //$groupby = trim(str_replace('GROUP BY', "", $criteria->getGroupby()));
@@ -367,7 +372,7 @@ class WeblogEntryHandlerBase extends XoopsObjectHandler {
         }
 
 //echo $sql ;
-		// DB connect
+        // DB connect
         if (!$result = $this->db->query($sql, $limit, $start)) {
             return $ret;
         }
@@ -381,6 +386,7 @@ class WeblogEntryHandlerBase extends XoopsObjectHandler {
             }
             unset($entry);
         }
+
         return $ret;
     }
 
@@ -397,24 +403,26 @@ class WeblogEntryHandlerBase extends XoopsObjectHandler {
             return -1;
         }
         $reads = $this->db->fetchArray($result);
+
         return $reads['reads'];
     }
 
     function incrementTrackbacks($blog_id , $increment_num=1) {
         $blog_id = intval($blog_id);
-		if( $increment_num > 0 ){
-			$increment_num = "+" . $increment_num ;
-		}elseif( $increment_num < 0 ){
-			$increment_num = "-" . abs($increment_num) ;
-		}else{
-			return true ;
-		}
+        if( $increment_num > 0 ){
+            $increment_num = "+" . $increment_num ;
+        }elseif( $increment_num < 0 ){
+            $increment_num = "-" . abs($increment_num) ;
+        }else{
+            return true ;
+        }
         $sql = sprintf('UPDATE %s SET trackbacks = trackbacks %s WHERE blog_id=%d',
                        $this->db->prefix($this->mydirname), $increment_num , $blog_id);
         if (!$result = $this->db->queryF($sql)) {  // must be queryF()
             return -1;
         }
-		return true ;
+
+        return true ;
     }
 
     function updateComments($blog_id, $total_num) {
@@ -433,48 +441,49 @@ class WeblogEntryHandlerBase extends XoopsObjectHandler {
             return -1;
         }
         $comments = $this->db->fetchArray($result);
+
         return $comments['comments'];
     }
 
     function getPrevNextBlog_id($blog_id , $created , $criteria) {
         $return_id = array() ;
         $blog_id = intval($blog_id);
-		$created = intval($created) ;
-		if( $criteria->render() ){
-			$extra = ' and ' . $criteria->render() ;
-		}else{
-			$extra = '' ;
-		}
-		if( $created <= 0 && $blog_id < 0 ){
-			return $return_id ;
-		}elseif( $created < 0 ){
-			$rs = $this->db->query( sprintf('select created from %s where blog_id=%d' ,  $this->db->prefix($this->mydirname) , $blog_id) ) ;
-			$result = $this->db->fetchArray($rs) ;
-			$created = $result['created'] ;
-		}
+        $created = intval($created) ;
+        if( $criteria->render() ){
+            $extra = ' and ' . $criteria->render() ;
+        }else{
+            $extra = '' ;
+        }
+        if( $created <= 0 && $blog_id < 0 ){
+            return $return_id ;
+        }elseif( $created < 0 ){
+            $rs = $this->db->query( sprintf('select created from %s where blog_id=%d' ,  $this->db->prefix($this->mydirname) , $blog_id) ) ;
+            $result = $this->db->fetchArray($rs) ;
+            $created = $result['created'] ;
+        }
 
         $sql_prev = sprintf('SELECT blog_id FROM %s where created<%d %s order by created desc limit 1', $this->db->prefix($this->mydirname) ,$created , $extra );
         $sql_next = sprintf('SELECT blog_id FROM %s where created>%d %s order by created limit 1', $this->db->prefix($this->mydirname), $created , $extra  );
         if ($result = $this->db->query($sql_prev)) {
             if($prev = $this->db->fetchArray($result)){
-				$return_id['prev'] = $prev['blog_id'] ;
-			}
+                $return_id['prev'] = $prev['blog_id'] ;
+            }
         }
         if ($result = $this->db->query($sql_next)) {
             if( $next = $this->db->fetchArray($result) ){
-				$return_id['next'] = $next['blog_id'] ;
-			}
+                $return_id['next'] = $next['blog_id'] ;
+            }
         }
+
         return $return_id;
     }
 }
 }
 
-
 // for module duplicate
 $entry_class =  strval(ucfirst($mydirname) . 'Entry') ;
 if( ! defined($entry_class) && isset($GLOBALS['mydirname']) ){
-	define($entry_class , 'DEFINED CLASS') ;
+    define($entry_class , 'DEFINED CLASS') ;
 
 eval('
 	class '. ucfirst($GLOBALS['mydirname']) .'Entry extends WeblogEntryBase{
@@ -496,4 +505,3 @@ eval('
 ') ;
 
 }
-?>

@@ -37,6 +37,7 @@ class WeblogCategories {
         if (!isset($instance)) {
             $instance = new WeblogCategories();
         }
+
         return $instance;
     }
 
@@ -55,6 +56,7 @@ class WeblogCategories {
             $criteria->setLimit($perPage);
         }
         $result =& $this->handler->getObjects($criteria);
+
         return $result;
     }
 
@@ -84,6 +86,7 @@ class WeblogCategories {
             $path .= $delim.$p->getVar('cat_title');
         }
         $path .= $delim.$self->getVar('cat_title');
+
         return substr($path, strlen($delim));
     }
 
@@ -96,12 +99,11 @@ class WeblogCategories {
     }
    
     /**
-	 *@return category tree array with counts
-	 *@remarks added by hodaka
-	 */
-	function getChildTreeArray($cat_id=0, $order="",$none=0) {
-	 	return $this->handler->getChildTreeArray($cat_id, $order,$none);
-	}
-	
+     *@return category tree array with counts
+     *@remarks added by hodaka
+     */
+    function getChildTreeArray($cat_id=0, $order="",$none=0) {
+        return $this->handler->getChildTreeArray($cat_id, $order,$none);
+    }
+    
 }
-?>

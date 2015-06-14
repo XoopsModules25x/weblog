@@ -47,12 +47,12 @@ class Net_TrackBack{
      * Send a TrackBack ping.
      * (used by TrackBack client.)
      *
-     * @param  string $url        TrackBack URL
-     * @param  array  $data       data of TrackBack
-     * @param  string $user_agent User-Agent (Optional)
-     * @param  string $charset    Character set of data (Optional)
+     * @param string $url        TrackBack URL
+     * @param array  $data       data of TrackBack
+     * @param string $user_agent User-Agent (Optional)
+     * @param string $charset    Character set of data (Optional)
      *
-     * @return mixed  true on success. PEAR_Error on failure.
+     * @return mixed true on success. PEAR_Error on failure.
      *
      * @access public
      */
@@ -93,16 +93,18 @@ class Net_TrackBack{
             } else {
                 $message = '(unrecognized message)';
             }
+
             return PEAR::raiseError('Server returns error: ' . $message,
                                     NET_TRACKBACK_ERROR_REMOTE_ERROR);
         }
+
         return true;
     }
     /**
      * Discover TrackBack URL from given URL
      * (used by TrackBack client.)
      *
-     * @param  string $url The URL to discover
+     * @param string $url The URL to discover
      *
      * @return mixed TrackBack URL on success.
      *               false on no TrackBack URL.
@@ -146,13 +148,14 @@ class Net_TrackBack{
                 $result[] = $abouts[1];
             }
         }
+
         return $result;
     }
     /**
      * Return ping received or not
      * (used by TrackBack server.)
      *
-     * @return bool   true when ping requested
+     * @return bool true when ping requested
      *
      * @access public
      * @see Net_TrackBack::isListup()
@@ -164,7 +167,7 @@ class Net_TrackBack{
      * Return listup requested or not
      * (used by TrackBack server.)
      *
-     * @return bool   true when listup requested
+     * @return bool true when listup requested
      *
      * @access public
      * @see Net_TrackBack::isPing()
@@ -176,9 +179,9 @@ class Net_TrackBack{
      * Pick up TrackBack related valiable from original data
      * (used by TrackBack server.)
      *
-     * @param  array $data   Received ping data (may be $_POST)
+     * @param array $data Received ping data (may be $_POST)
      *
-     * @return array  the data of TrackBack ping
+     * @return array the data of TrackBack ping
      *
      * @access public
      */
@@ -189,6 +192,7 @@ class Net_TrackBack{
                 $result[$key] = $data[$key];
             }
         }
+
         return $result;
     }
     /**
@@ -214,29 +218,31 @@ class Net_TrackBack{
         if ($pos != false) {
             $id = substr($id, 0, $pos);
         }
+
         return $id;
     }
     /**
      * Display result of TrackBack ping/listup
      * (used by TrackBack server.)
      *
-     * @param  string $message output message
+     * @param string $message output message
      *
-     * @return bool   true only
+     * @return bool true only
      *
      * @access public
      */
     function displayResult($message) {
         header('Content-Type: text/xml');
         echo $message;
+
         return true;
     }
     /**
      * Format result for TrackBack ping
      * (used by TrackBack server.)
      *
-     * @param  bool   $success Result of ping
-     * @param  string $message Message when error occured
+     * @param bool   $success Result of ping
+     * @param string $message Message when error occured
      *
      * @return string generated XML to reply
      *
@@ -255,17 +261,18 @@ class Net_TrackBack{
             $result = $head . '<error>1</error>' . "\n" .
                 "<message>$message</message>\n" . $foot;
         }
+
         return $result;
     }
     /**
      * Generates RSS to listup TrackBack datas
      * (used by TrackBack server.)
      *
-     * @param  array  $items
-     * @param  string $title
-     * @param  string $link
-     * @param  string $description
-     * @param  string $lang
+     * @param array  $items
+     * @param string $title
+     * @param string $link
+     * @param string $description
+     * @param string $lang
      *
      * @return string generated XML to reply
      *
@@ -307,6 +314,7 @@ class Net_TrackBack{
                 $rss .= "<item>\n" . $part . "</item>\n";
             }
         }
+
         return $rss . $footer;
     }
     /**
@@ -315,7 +323,7 @@ class Net_TrackBack{
      *
      * @param  array $data
      * @return mixed generated RDF to embeded on success,
-     *               or PEAR_Error object on failure
+     *                    or PEAR_Error object on failure
      * @access public
      */
     function toEmbededRDF($data) {
@@ -341,6 +349,7 @@ class Net_TrackBack{
                                  NET_TRACKBACK_ERROR_INVALID_PARAM);
             }
         }
+
         return $rdfspec .
             sprintf($rdffmt,
                     $data['about'],
@@ -352,4 +361,3 @@ class Net_TrackBack{
                     $data['date']);
     }
 }
-?>

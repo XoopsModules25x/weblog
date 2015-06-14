@@ -55,6 +55,7 @@ class WeblogTrackbackBase extends XoopsObject {
         $url_array = parse_url( $tb_url ) ;
         if( $url_array['scheme']=='http' && $url_array['host'] && $url_array['path'] )
             return true ;
+
         return false ;
     }
 }
@@ -83,9 +84,11 @@ class WeblogTrackbackHandlerBase extends XoopsObjectHandler {
                     $trackback_obj->assignVars( $trackback_data ) ;
                     array_push( $trackback_array , $trackback_obj ) ;
                 }
+
                 return $trackback_array ;
             }
         }
+
         return false;
     }
 
@@ -100,21 +103,21 @@ class WeblogTrackbackHandlerBase extends XoopsObjectHandler {
             }
             $ent_trackback = trim( $ent_trackback );
         }
+
         return $ent_trackback ;
 
     }
 
-
     function insert(&$trackback) {
-		//ORGINAL
+        //ORGINAL
         //if (strtolower(get_parent_class($trackback)) != 'weblogtrackbackbase') {  // php-5< must be lowercase only
         //    $trackback->setErrors("Object isn't a sub-class of WeblogTrackbackBase");   // for test hodaka
         //    return false;
         //}
 
-		//NEW
+        //NEW
         if (get_parent_class($trackback) != 'weblogtrackbackbase') {  // must be lowercase only
-		$trackback->setErrors("Object isn't a sub-class of WeblogTrackbackBase");	// trapped by hodaka
+        $trackback->setErrors("Object isn't a sub-class of WeblogTrackbackBase");    // trapped by hodaka
             return false;
         }
 
@@ -163,7 +166,7 @@ class WeblogTrackbackHandlerBase extends XoopsObjectHandler {
             $trackback->setErrors("Failed DB query");   // for test hodaka
             return false;
         }elseif( $this->db->getAffectedRows() != 1 ){
-            $trackback->setErrors("No databse record updated");	// for test by hodaka
+            $trackback->setErrors("No databse record updated");    // for test by hodaka
             return false ;
         }
 
@@ -185,6 +188,7 @@ class WeblogTrackbackHandlerBase extends XoopsObjectHandler {
         if (!$result = $this->db->query($sql)) {  // must be query()
             return false;
         }
+
         return true;
     }
 
@@ -197,12 +201,12 @@ class WeblogTrackbackHandlerBase extends XoopsObjectHandler {
             return 0;
         }
         $count = $this->db->fetchArray($result);
+
         return $count['count'];
     }
 
 }
 }
-
 
 // for module duplicate
 $entry_class =  strval(ucfirst($mydirname) . 'Trackback') ;
@@ -227,4 +231,3 @@ eval('
 ') ;
 
 }
-?>

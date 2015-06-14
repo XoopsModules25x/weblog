@@ -30,9 +30,9 @@ include_once dirname(__FILE__) . '/admin_header.php';
 
 $action = '';
 if (isset($_POST)) {
-	foreach ($_POST as $k => $v) {
-		${$k} = $v;
-	}
+    foreach ($_POST as $k => $v) {
+        ${$k} = $v;
+    }
 }
 
 function privManagerLink() {
@@ -142,4 +142,3 @@ switch ($action) {
         privmanager();
         break;
 }
-?>

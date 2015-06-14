@@ -79,7 +79,6 @@ define('_AM_WEBLOG_CAT_GPERM', 'Groups allowed to post this category');
 define('_AM_WEBLOG_CAT_OPERATE', 'Operation');
 define('_AM_WEBLOG_CAT_SETALL', 'Set group post permissions of all categories ');
 
-
 define('_AM_WEBLOG_MYBLOCKSADMIN', 'Blocks and Groups');
 define('_AM_WEBLOG_MYBLOCKSADMINDSC', 'Setting of Blocks and Groups');
 define('_AM_WEBLOG_TEMPLATE_MANEGER', 'Templates');

@@ -49,7 +49,7 @@ define('_MB_WEBLOG_EDIT_LINKS_MODULE', '参照するリンクモジュール<br 
 define('_MB_WEBLOG_EDIT_LINKS_NUMBER', '表示するリンクの数');
 define('_MB_WEBLOG_EDIT_LINKS_ONLYPOST', '投稿者がブログを投稿する時のみ表示(0=いいえ , 1=はい)');
 define('_MB_WEBLOG_EDIT_LINKS_SHOWDSC', 'リンクの説明を表示(0=いいえ , 1=はい)');
-define('_MB_WEBLOG_EDIT_CAT_ORDERBY', '並び順');	// added for category list by hodaka
+define('_MB_WEBLOG_EDIT_CAT_ORDERBY', '並び順');    // added for category list by hodaka
 define('_MB_WEBLOG_EDIT_CAT_TITLE', 'カテゴリ名');
 define('_MB_WEBLOG_EDIT_CAT_ID', 'カテゴリID');
 define('_MB_WEBLOG_EDIT_SHOW_FORBIDDEN_PICTURE', 'ユーザにエントリの閲覧が許可されていない場合でも画像を表示 (0=表示しない , 1=表示する )');
@@ -102,4 +102,3 @@ define('_MB_WEBLOG_USERS_SORT_READS', '累計閲覧数');
 define('_MB_WEBLOG_USERS_SORT_UPDATE', '最終更新');
 
 }
-?>

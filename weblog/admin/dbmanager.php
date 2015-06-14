@@ -30,9 +30,9 @@ include_once dirname(__FILE__) . '/admin_header.php';
 
 $action = '';
 if (isset($_POST)) {
-	foreach ($_POST as $k => $v) {
-		${$k} = $v;
-	}
+    foreach ($_POST as $k => $v) {
+        ${$k} = $v;
+    }
 }
 
 function dbManagerLink() {
@@ -43,7 +43,7 @@ function dbManagerLink() {
 }
 
 function dbManager() {
-	global  $mydirname  ;
+    global  $mydirname  ;
     xoops_cp_header();
 //    echo sprintf('<h4>%s&nbsp;&raquo;&raquo;&nbsp;%s</h4>',
 //                 indexLink(), _AM_WEBLOG_DBMANAGER);
@@ -184,8 +184,8 @@ function addTable($post) {
 }
 
 function checkTables() {
-	global $mydirname ;
-	 xoops_cp_header();
+    global $mydirname ;
+     xoops_cp_header();
 //    echo sprintf('<h4>%s&nbsp;&raquo;&raquo;&nbsp;%s&nbsp;&raquo;&raquo;&nbsp;%s</h4>',
 //                 indexLink(), dbManagerLink(), _AM_WEBLOG_CHECKTABLE);
 
@@ -284,7 +284,6 @@ function synchronizeComments() {
     exit();
 }
 
-
 switch ($action) {
     case "comments":
         synchronizeComments();
@@ -302,4 +301,3 @@ switch ($action) {
         dbManager();
         break;
 }
-?>

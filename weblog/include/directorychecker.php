@@ -76,6 +76,7 @@ class DirectoryChecker
                 ) . "<a href=" . $_SERVER['PHP_SELF'] . "?op=setperm&amp;mode=$mode&amp;path=$path&amp;redirect=$redirectFile&amp;languageConstants=$myWords2> "
                 . $languageConstants[4] . '</a>';
         }
+
         return $path_status;
     }
 
@@ -116,6 +117,7 @@ class DirectoryChecker
     public static function setDirectoryPermissions($target, $mode = 0777)
     {
         $target = str_replace("..", "", $target);
+
         return @chmod($target, (int)$mode);
     }
 }

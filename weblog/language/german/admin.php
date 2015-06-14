@@ -110,6 +110,4 @@ define('_AM_WEBLOG_DIRNOTCREATED2','The directory can not be created');
 define('_AM_WEBLOG_PERMSET2','The permission has been set');
 define('_AM_WEBLOG_PERMNOTSET2','The permission can not be set');
 
-
 }
-?>

@@ -29,7 +29,6 @@ include_once(sprintf('%s/modules/%s/include/PEAR/Net/TrackBack.php', XOOPS_ROOT_
 include_once(sprintf('%s/modules/%s/include/PEAR/XML/Unserializer.php', XOOPS_ROOT_PATH , $xoopsModule->dirname()));
 include_once(sprintf('%s/modules/%s/include/encode_set.inc.php', XOOPS_ROOT_PATH, $xoopsModule->dirname()));
 
-
 class Weblog_Trackback_Operator extends Net_TrackBack{
 
     var $handler ;
@@ -49,6 +48,7 @@ class Weblog_Trackback_Operator extends Net_TrackBack{
         if (!isset($instance)) {
             $instance = new Weblog_Trackback_Operator();
         }
+
         return $instance;
     }
 
@@ -72,9 +72,9 @@ class Weblog_Trackback_Operator extends Net_TrackBack{
         }else{
             $this->tb_result[$tb_url] =     "Can't delete trackback link" ;
         }
+
         return $this->handler->delete($trackback);
     }
-
 
     function Get_Trackback_Url( $entry , $old_trackbackurl ){
         // create $post_trackback_urls
@@ -119,7 +119,6 @@ class Weblog_Trackback_Operator extends Net_TrackBack{
         return $trackback_url_array ;
     }
 
-
     function Create_Trackback_Data( $entry=null , $blog_name , $blog_url ){
         if( empty($entry) )
                 return true ;
@@ -133,9 +132,9 @@ class Weblog_Trackback_Operator extends Net_TrackBack{
         $data['blog_name'] = encoding_set( $blog_name , "UTF-8") ;
 
         $this->post_trackback_data = $data ;
+
         return true ;
     }
-
 
     function Set_Trackback_Values( &$trackback , $tb_rss_data , $trackback_url ,  $direction , $entry=null ){
 
@@ -156,12 +155,14 @@ class Weblog_Trackback_Operator extends Net_TrackBack{
             if($this->sender_ip == 'unknown') {
                 $tb_rss_data['result'] = 'ip unknown';
                 $this->sendTBResultMail($tb_rss_data);
+
                 return false;
             }
             // in case with no title or no blog_name
             if($tb_rss_data['blog_name'] == "" || $tb_rss_data['title'] == "") {
                 $tb_rss_data['result'] = 'no name or no title';
                 $this->sendTBResultMail($tb_rss_data);
+
                 return false;
             }
 
@@ -178,6 +179,7 @@ class Weblog_Trackback_Operator extends Net_TrackBack{
                 if(mb_strlen($match_title) < intval($GLOBALS['xoopsModuleConfig']['check_trackback']) && mb_strlen($match_name) < intval($GLOBALS['xoopsModuleConfig']['check_trackback'])) {
                     $tb_rss_data['result'] = 'no japanese word';
                     $this->sendTBResultMail($tb_rss_data);
+
                     return false;
                 }
             }
@@ -186,16 +188,18 @@ class Weblog_Trackback_Operator extends Net_TrackBack{
             if($GLOBALS['xoopsModuleConfig']['check_rbl'] && !$this->check_RBL()) {
                 $tb_rss_data['result'] = 'found in rbl';
                 $this->sendTBResultMail($tb_rss_data);
+
                 return false;
             }
 
             // in case keywords are specified by xoopsModuleConfig
             $bannedwords = !empty($GLOBALS['xoopsModuleConfig']['spam_word'])? explode('|', $GLOBALS['xoopsModuleConfig']['spam_word']) : array();
             foreach($bannedwords as $banned) {
-            	if(empty($banned)) continue;
+                if(empty($banned)) continue;
                 if(preg_match("/".$banned."/i", encoding_set($tb_rss_data['blog_name'], _CHARSET, $tb_rss_data['encoding'])) || preg_match("/".$banned."/i", encoding_set($tb_rss_data['title'], _CHARSET, $tb_rss_data['encoding']))) {
                     $tb_rss_data['result'] = 'banned word';
                     $this->sendTBResultMail($tb_rss_data);
+
                     return false;
                 }
             }
@@ -215,9 +219,9 @@ class Weblog_Trackback_Operator extends Net_TrackBack{
         $trackback->setVar('description' , encoding_set( $tb_rss_data['description'] , _CHARSET , $tb_rss_data['encoding'] ) ) ;
         $trackback->setVar('link' , $tb_rss_data['link'] ) ;
         $trackback->setVar('direction' , $direction ) ;
+
         return true ;
     }
-
 
     function Check_Trackback_URL( $tb_url ){
         if( $tb_url ){
@@ -230,19 +234,19 @@ class Weblog_Trackback_Operator extends Net_TrackBack{
         }
     }
 
-
     function Weblog_Post_Trackback( $trackback_url ){
 
         $return_from_tb_server = $this->sendPing( $trackback_url , $this->post_trackback_data , $this->user_agent , 'utf-8') ;
         if( $return_from_tb_server === true ){
             $this->tb_result[$trackback_url] = "trackback success" ;
+
             return true ;
         }else{
             $this->tb_result[$trackback_url] = "trackback failed" ;
+
             return false ;
         }
     }
-
 
     function Get_RSS_from_trackback_URL( $tb_url ){
 
@@ -266,9 +270,9 @@ class Weblog_Trackback_Operator extends Net_TrackBack{
                 }
             }
         }
+
         return false ;
     }
-
 
     function Parse_XML($xml){
         $data = array("encoding" => "" );
@@ -288,18 +292,20 @@ class Weblog_Trackback_Operator extends Net_TrackBack{
                 $data['title'] = $unserialize_data['rss']['channel']['title']  ;
                 $data['description'] = $unserialize_data['rss']['channel']['description']  ;
                 $data['link'] = $unserialize_data['rss']['channel']['link']  ;
+
                 return $data ;
             }
         }
+
         return false ;
     }
-
 
     function Xoops_Weblog_Msg(){
         $trackback_result_msg = "" ;
         foreach( $this->tb_result as $tb_url=>$result ){
             $trackback_result_msg .= $tb_url . "=&gt;" . $result . ".<br />\n" ;
         }
+
         return $trackback_result_msg ;
     }
 
@@ -321,6 +327,7 @@ class Weblog_Trackback_Operator extends Net_TrackBack{
             $check = $query_ip . '.' . $rbl;
             if (gethostbyname($check) != $check) return false;
         }
+
         return true;
     }
 
@@ -372,6 +379,7 @@ class Weblog_Trackback_Operator extends Net_TrackBack{
                 break;
             }
         }
+
         return($exit_c);
     }
     function isIPInNet($ip,$net,$mask)
@@ -406,8 +414,8 @@ class Weblog_Trackback_Operator extends Net_TrackBack{
             $xoopsMailer->setBody( $body );
             $xoopsMailer->send();
         }
+
         return true;
     }
 
 }
-?>

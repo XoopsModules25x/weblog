@@ -77,7 +77,7 @@ define('_BL_UPDATEPING','更新Pingを送る');
 define('_BL_SPECIFY_TIME' , '投稿日を下記の時間で指定する') ;
 define('_BL_SPECIFY_TIME_DSC' , '&nbsp;&nbsp;&nbsp; 投稿日時') ;
 define('_BL_TRACKBACK','トラックバックURL');
-define('_BL_TRACKBACKS','トラックバック数'); 
+define('_BL_TRACKBACKS','トラックバック数');
 define('_BL_TRACKBACK_DSC','トラックバックURLを複数記入する場合は改行で区切ってください。');
 define('_BL_TRACKBACK_ADMIN','受信したトラックバック');
 define('_BL_PERMISSION','閲覧可能グループ');
@@ -87,7 +87,6 @@ define('_BL_GROUP_PERMIT', "申し訳ありませんが、このエントリは�
 define('_BL_SELECT_ALL', 'すべて選択');
 define('_BL_CAUTION_NOHTML', '<b>ご注意</b>');
 define('_BL_FORBIDDEN_HTML_TAGS', '<b>全てのHTMLタグは使えません</b>(BBタグを使ってください)');
-
 
 // %s is your site name
 define('_BL_INTARTICLE','%sで見つけた興味深いブログ');
@@ -108,8 +107,8 @@ define('_BL_NOARCHIVEDESC', 'エントリはありません。');
 define('_BL_ARCHIVE', '過去のアーカイブ');
 define('_BL_ARCHIVE_FOR', '%sさんの過去のブログ');
 define('_BL_READS', '閲覧数');
-define('_BL_NEXT', '次のエントリ'); 
-define('_BL_PREV', '前のエントリ'); 
+define('_BL_NEXT', '次のエントリ');
+define('_BL_PREV', '前のエントリ');
 
 // division separator
 define('_BL_ENTRY_SEPARATOR' , '前後半の区切り');
@@ -136,7 +135,6 @@ define('_BL_TRACKBACK_RECIEVED' , 'このエントリが受けたトラックバ
 define('_BL_TRACKBACKS_FOR',' (%sさんのエントリへ)');
 define('_BL_COMMENTS_FOR','(%sさんのエントリに)');
 
-
 // use weBLog imagemanager :: myalbum-P
 define("_BL_ALBM_PHOTOUPLOAD","画像アップロード");
 define("_BL_ALBM_MAXPIXEL","サイズ上限");
@@ -154,4 +152,3 @@ define("_BL_ALBM_FILEERROR","画像アップロードに失敗：画像ファイ
 define("_BL_ALBM_FILEREADERROR","画像読込失敗：なんらかの理由でアップロードされた画像ファイルを読み出せません。");
 
 }
-?>

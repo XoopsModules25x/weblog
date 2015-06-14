@@ -32,5 +32,3 @@ if (!empty($xoopsUser)) {
   redirect_header(XOOPS_URL.'/modules/'.$mydirname.'/index.php', 5,
                   _BL_GATHERING_SORRY);
 }
-     
-?>

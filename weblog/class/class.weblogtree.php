@@ -66,6 +66,7 @@ class WeblogTree
         while ($myrow = $this->db->fetchArray($result)) {
             array_push($arr, $myrow);
         }
+
         return $arr;
     }
 
@@ -82,6 +83,7 @@ class WeblogTree
         while (list ($id) = $this->db->fetchRow($result)) {
             array_push($idarray, $id);
         }
+
         return $idarray;
     }
 
@@ -102,6 +104,7 @@ class WeblogTree
             array_push($idarray, $r_id);
             $idarray = $this->getAllChildId($r_id, $order, $idarray);
         }
+
         return $idarray;
     }
 
@@ -120,6 +123,7 @@ class WeblogTree
         }
         array_push($idarray, $r_id);
         $idarray = $this->getAllParentId($r_id, $order, $idarray);
+
         return $idarray;
     }
 
@@ -140,6 +144,7 @@ class WeblogTree
             return $path;
         }
         $path = $this->getPathFromId($parentid, $title, $path);
+
         return $path;
     }
 
@@ -204,6 +209,7 @@ class WeblogTree
             return $path;
         }
         $path = $this->getNicePathFromId($parentid, $title, $funcURL, $path);
+
         return $path;
     }
 
@@ -222,15 +228,16 @@ class WeblogTree
             return $path;
         }
         $path = $this->getIdPathFromId($parentid, $path);
+
         return $path;
     }
 
     /**
      * Enter description here...
      *
-     * @param unknown_type $sel_id
-     * @param unknown_type $order
-     * @param unknown_type $parray
+     * @param  unknown_type $sel_id
+     * @param  unknown_type $order
+     * @param  unknown_type $parray
      * @return unknown
      */
     function getAllChild($sel_id = 0, $order = "", $parray = array())
@@ -249,15 +256,16 @@ class WeblogTree
             array_push($parray, $row);
             $parray = $this->getAllChild($row[$this->id], $order, $parray);
         }
+
         return $parray;
     }
     /**
      * Enter description here...
      *
-     * @param unknown_type $sel_id
-     * @param unknown_type $order
-     * @param unknown_type $parray
-     * @param unknown_type $r_prefix
+     * @param  unknown_type $sel_id
+     * @param  unknown_type $order
+     * @param  unknown_type $parray
+     * @param  unknown_type $r_prefix
      * @return unknown
      */
     function getChildTreeArray($sel_id = 0, $order = "", $parray = array(), $r_prefix = "")
@@ -277,7 +285,7 @@ class WeblogTree
             array_push($parray, $row);
             $parray = $this->getChildTreeArray($row[$this->id], $order, $parray, $row['prefix']);
         }
+
         return $parray;
     }
 }
-?>
