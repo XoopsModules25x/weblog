@@ -42,8 +42,8 @@ class WeblogCategoryBase extends XoopsObject {
     /**
      * Constructs an instance of this class
      */
-    function WeblogCategoryBase() {
-        $this->XoopsObject();
+    function __construct() {
+        parent::__construct();
 
         $this->initVar("cat_id", XOBJ_DTYPE_INT, 0, false);
         $this->initVar("cat_pid", XOBJ_DTYPE_INT, 0, true);

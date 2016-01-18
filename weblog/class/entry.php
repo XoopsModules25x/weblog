@@ -38,14 +38,14 @@ class WeblogEntryBase extends XoopsObject {
     /**
      * Constructs an instance of this class
      */
-    function WeblogEntryBase() {
+    function __construct() {
         global $xoopsModuleConfig ;
         $default_dohtml = ( $xoopsModuleConfig['default_dohtml'] ) ? 0 : 1 ;
         $default_dobr = ( $xoopsModuleConfig['default_dobr'] ) ? 1 : 0 ;
         $default_private = ( $xoopsModuleConfig['default_private'] ) ? "Y" : "N" ;
         $default_updateping = ( $xoopsModuleConfig['default_updateping'] ) ? 1 : 0 ;
 
-        $this->XoopsObject();
+        parent::__construct();
 
         $this->initVar("blog_id", XOBJ_DTYPE_INT, 0, false);
         $this->initVar("user_id", XOBJ_DTYPE_INT, 0, true);

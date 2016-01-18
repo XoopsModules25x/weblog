@@ -36,9 +36,8 @@ class WeblogTrackbackBase extends XoopsObject {
     /**
      * Constructs an instance of this class
      */
-    function WeblogTrackbackBase() {
-        $this->XoopsObject();
-
+    function __construct() {
+        parent::__construct();
         $this->initVar("blog_id", XOBJ_DTYPE_INT, 0, false);
         $this->initVar("tb_url", XOBJ_DTYPE_TXTBOX, null, true);
         $this->initVar("blog_name", XOBJ_DTYPE_TXTBOX, null, false);

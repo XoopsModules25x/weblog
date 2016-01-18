@@ -39,9 +39,9 @@ class WeblogPrivBase extends XoopsObject {
     /**
      * Constructs an instance of this class
      */
-    function WeblogPrivBase() {
-        $this->XoopsObject();
-
+    function __construct() {
+        
+        parent::__construct();
         $this->initVar("priv_id", XOBJ_DTYPE_INT, 0, false);
         $this->initVar("priv_gid", XOBJ_DTYPE_INT, 0, true);
 
