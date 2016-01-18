@@ -1,0 +1,41 @@
+INSTALL/UNISTALL
+=================
+
+No special measures necessary, follow the standard installation process and extract the module folder into the ../modules directory. Install the module through Admin -> System Module -> Modules.
+
+Detailed instructions on installing modules are available in the XOOPS Operations Manual: http://goo.gl/adT2i
+
+Quick installation instructions:
+
+1. Unzip/Untar the downloaded file to the xoops module directory
+2. Add styles.css to your theme .css file or /xoops.css
+3. Install as a normal module.
+
+Quick update instructions:
+1. Unzip/Untar the downloaded file to the xoops module directory
+2. Update as a normal module.
+3. Go to weBLog Admin page and click 'Database'
+4. Check database clicking 'Check database structure'
+5. Create tables or columns in database if there are buttons to do it
+6. do not forget register groups you want to allow to post in Privilege page
+
+For more information for installation and updating the module, visit the website
+http://wellwin.net/ and jump to Projects page. You could find user's manual, it
+is always under development though, in which there is more instructions.
+
+From v1.10, You do not have to copy or move backend_weblog.php.
+You can just specify at Admin menu whether or not RSS icon is showed in list page.
+Also templates were changed and added, therefore when you upgrade the module,
+you have to do module update in Admin menu or edit your templates if you use your
+own templates set instead of default.
+
+Caution:
+Please use this module on your own risk.
+
+If you have questions, comments or suggestions, please visit
+http://wellwine.net/ and post in forum. It would be appreciated any comments or
+encouragement :-)
+
+Thanks for trying the module!
+
+wellwine

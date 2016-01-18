@@ -1,0 +1,230 @@
+/* $Id: styles.css,v 1.8 2005/06/18 17:56:01 tohokuaiki Exp $ */
+#blog {
+	width:100%;
+}
+
+#blog div.page {
+	border-bottom:1px solid #aaa;
+	margin-bottom:20px;
+}
+#blog div.page span.title {
+	font-size:1.3em;
+	font-weight:bold;	
+	
+}
+#blog div.rss {
+display:inline-block;
+float:right;
+font-size:.8em;		
+}
+#blog div.rss span {
+	display:block;
+	margin-top:10px;
+}
+div.blogEntry {
+	border-left:solid 5px #eee;	
+	border-radius:10px;
+	padding-left:30px;
+	
+}
+
+.blogTitle h2 {
+	margin-bottom:40px
+}
+.blogTitle h2 {
+	font-style:normal;
+	text-decoration:none;;
+	font-variant:normal;
+	text-transform:none;
+}
+.blogTitle h2:hover {
+	text-decoration:underline;
+}
+.authorInfo img {
+
+	box-shadow:1px 1px 4px 5px #ddd;
+	margin-bottom:20px;
+
+
+}
+.authorInfo {
+	display:inline-block;
+	vertical-align:top;
+	text-align:right;
+	float:right;
+
+}
+.blogContents {
+	width:75%;
+	display:inline-block;
+	
+	}
+div.blogFooter {
+	margin-top:15px;
+	padding: 10px 10px 10px 0;
+	font-size: 80%;
+	text-align: right;
+	border-top:dashed 1px #aaa;	
+	border-bottom:dashed 1px #aaa;
+	border-radius:10px;	
+
+}
+
+.blogindicate{
+	float:left;
+	}
+
+/* div.blogEntry {margin-left: 30px; margin-top: 10px; margin-bottom: 10px;} */
+div.blogDate {font-family: Verdana; margin-bottom: 10px;margin-top: 10px; font-style: normal; font-weight: bold;}
+/* div.blogTitle {font-family: Verdana; margin-left: 0px; margin-bottom: 0px; font-size: 130%;font-weight: bold;}*/
+/* div.blogTitle a {font-family: Verdana;}*/
+div.blogCategory {margin-left: 0px; font-size: 80%;font-weight: normal;}
+div.blogShoulder {margin-top: 0px; margin-bottom: 0px; font-size: 80%; font-weight: normal; text-align: right; vertical-align: top;}
+div.blogContents:first-letter {}
+div.blogTrackbackAnounce {margin-top: 10px; margin-left: 0px; font-size: 80%; text-align: right;}
+.blogShowTrackbackURL {margin-top: 10px; margin-left: 0px; font-size: 80%; text-align: right; text-decoration: underline;}
+.blogTrackbackTransmit {color: #888888;
+	font-family: Verdana, Arial, sans-serif;
+	font-size: 100%;
+    line-height:180%;
+	border-bottom: 1px solid #888888;
+	border-left: 6px solid #888888;	
+	text-align: left;
+	font-weight: bold;	
+	margin-bottom: 10px;
+	margin-top: 10px;
+	margin-right: 10px;
+	margin-left: 30px;
+	padding-left: 15px;
+}
+.blogTrackbackRecieved {color: #888888;
+	font-family: Verdana, Arial, sans-serif;
+	font-size: 100%;
+    line-height:180%;
+	border-bottom: 1px solid #888888;
+	border-left: 6px solid #888888;	
+	text-align: left;
+	font-weight: bold;	
+	margin-bottom: 10px;
+	margin-top: 10px;
+	margin-right: 10px;
+	margin-left: 30px;
+	padding-left: 15px;
+}
+.blogTrackbackURL { text-align: right; font-size:80%; margin-right:15px;}
+.blogTrackbackTitle {	font-family: Verdana;margin-left: 30px; margin-top: 10px; }
+.blogTrackbackDescription {
+	font-family: Verdana;
+	font-size:12px;
+	line-height:14px;
+	color:#666666;
+	margin-top: 10px;
+	margin-right: 10px;
+	margin-left: 50px;
+	padding:4px 10px;
+	border-top-width: 1px;
+	border-right-width: 1px;
+	border-bottom-width: 1px;
+	border-left-width: 1px;
+	border-right-style: none;
+	border-bottom-style: dotted;
+	border-left-style: none;
+	border-top-color: #990000;
+	border-right-color: #990000;
+	border-bottom-color: #990000;
+	border-left-color: #990000;
+}
+
+.blogTrackbackBlogname {margin-right: 15px; margin-top: 4px; margin-bottom: 4px; text-align: right ;}
+.blogTrackbackCreated { margin-right:15px; font-family: Verdana;margin-top: 4px; margin-bottom: 8px; font-size: 80%; font-weight: normal; text-align: right; vertical-align: top;}
+.blogHeader {margin: 0px; border: 0px; padding: 4px;}
+
+
+/* calendar and archives */
+
+#weblog-calendar {
+	empty-cells: show;
+	font-size: 100%;
+	margin: 0 auto;
+	width: 132px;	/* change if you like:  pixels = column with * 7 + cellspacing */
+					/* sample 14*7+6=104 or 18*7+6=132 or 22*7+6=160 */
+/*	background-color:#fff;*/
+}
+
+#weblog-calendar a {
+	text-decoration: none;
+}
+
+#weblog-calendar a:hover {
+	background: transparent;
+	color: #c00;
+}
+
+#weblog-calendar caption {
+	color: #000;
+	font: 100% Tahoma, Arial, Serif;	/* Font-size critical if you change box width */
+	margin: 0;
+	padding: 0;
+	text-align: center;
+}
+
+#weblog-calendar #to-this { padding: 0 5px; }
+#weblog-calendar #to-next a,
+#weblog-calendar #to-prev a,
+#weblog-calendar #to-this a {
+}
+
+#weblog-calendar #to-next a:hover,
+#weblog-calendar #to-prev a:hover,
+#weblog-calendar #to-this a:hover {
+	color: #c00;
+}
+
+#weblog-calendar th {
+	color: #000;
+	text-transform: uppercase;
+	font-size: 90%;				/* Font-size critical if you change box width */
+	font-weight: normal;
+	text-align: center;
+	vertical-align: middle;
+	width: 18px;				/* Critical if you change box width */
+	height: 18px;				/* Critical if you change box width */
+/*	background-color:#eee;*/
+}
+
+#weblog-calendar td {
+	color: #000;
+	font: normal 100% Tahoma, Arial, Serif;	/* Font-size critical if you change box width */
+	text-align: center;
+	vertical-align: middle;
+	width: 18px;				/* Critical if you change box width */
+	height: 18px;				/* Critical if you change box width */
+/*  background-color:#fff;*/
+}
+
+#weblog-calendar .today {
+	border: 1px solid #000;
+}
+
+#weblog-calendar tr.weblog-header {
+/*	color: #xxx;
+	background-color: #xxx */
+}
+#weblog-calendar tr.weblog-week {
+/*	color: #xxx;
+	background-color: #xxx */
+}
+#weblog-calendar th.sunday,
+#weblog-calendar td.sunday {
+/*	color: #xxx;
+	background-color: #xxx */
+}
+#weblog-calendar th.saturday,
+#weblog-calendar td.saturday {
+/*	color: #xxx;
+	background-color: #xxx */
+}
+#weblog-calendar td.prevmonth,
+#weblog-calendar td.nextmonth {
+	color: #fff;				/* hides if the same color used as background */
+}

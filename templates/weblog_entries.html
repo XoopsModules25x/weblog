@@ -1,0 +1,87 @@
+<div id="blog">
+	<div class="page">
+		<span class="title"><{$page_title}></span> - <span class="subtitle"><{$page_subtitle}></span>
+		<{if $rss_show eq 1}>
+			<div class="rss">
+				<a href="<{$rss_feeder}>"><img src="images/rss.gif" border="0" ></a>
+				<a href="<{$rdf_feeder}>"><img src="images/rdf.gif" border="0" ></a>
+				<span><{$lang_rss}></span>
+			</div>
+		<{/if}>
+	</div>
+
+
+
+<{if $show_category_list}>
+<b><{$lang_categories}></b>
+<div class="blogCategory"><{$cat_url}></div>
+<hr>
+<{if count($category_navi) > 0}>
+<table border='0' cellspacing='5' cellpadding='0' align="center">
+  <tr><td valign="top">
+  <!-- Start category loop -->
+  <{foreach item=cat from=$category_navi}>
+    <{if $cat.prefix_num == 1 && $cat.cat_root_num != 0}>
+        </td>
+        <{if $cat.cat_root_num is div by $category_col}>
+            </tr><tr><td valign="top">
+        <{else}>
+            <td valign="top">
+        <{/if}>
+    <{/if}>
+    <div style="margin:<{$cat.margin}>;"><a href="<{$xoops_url}>/modules/<{$xoops_weblogdir}>/index.php?user_id=0&amp;cat_id=<{$cat.cat_id}>"><{$cat.prefix}><{$cat.cat_title}></a>(<{$cat.count}>)</div>
+  <{/foreach}>
+  <!-- End category loop -->
+  </td></tr>
+</table>
+<{/if}>
+<br /><br />
+<{/if}>
+	<{if $lang_recententries !== $page_subtitle }>
+		<b><{$lang_recententries}></b>
+	<{/if}>
+	<!-- start loop -->
+	<{foreach item=entry from=$entries}>
+		<{$entry.rdf_desc}>
+		<div class="blogDate">
+			<{$entry.created_date}>
+		</div>
+	<div class="blogEntry">
+		<div class="blogContents">
+			<span>
+				<a class="blogTitle" href="details.php?blog_id=<{$entry.blog_id}>"><h2><{$entry.title}></h2></a>
+			</span>
+			<{$entry.contents}>
+		</div>
+		<div class="authorInfo">
+			<{if $entry.use_avatar == 1}>
+				<img class="avatar" src="<{$entry.avatar_img}>"><BR />
+			<{/if}>
+			@ <{$entry.created_time}><BR />
+			<{$entry.lang_author}>: <a href="<{$entry.profileUri}>"><{$entry.uname}></a><BR />
+			<{$entry.lang_category}>:</b> <{$entry.category}>		
+		</div>
+		<div class="blogFooter">
+		<{if $entry.is_private eq 1}>
+			<b><i><{$entry.private}>:</i></b>
+			<{/if}>
+			<{$entry.read_users_blog}>
+			<{if $entry.provide_edit_link eq 1}>
+				&bull; <a href="post.php?blog_id=<{$entry.blog_id}>&edit=1"><{$lang_edit}></a>
+			<{/if}>
+			 &bull; <a href="<{$entry.comlink}>"><{$entry.lang_comments}> (<{$entry.comments}>)</a>
+			 &bull; <a href="<{$entry.tracklink}>"><{$entry.lang_trackbacks}> (<{$entry.trackbacks}>)</a>
+			 &bull; <{$entry.lang_reads}> (<{$entry.reads}>)
+	
+		</div>
+	</div>
+	<{/foreach}>
+</div>
+
+<!-- end loop -->
+
+<p>
+<{$pagination}>
+</p>
+
+<{include file='db:system_notification_select.html'}>
