@@ -43,7 +43,7 @@ if( ! function_exists( 'weblog_search_base' ) ) {
 function weblog_search_base($mydirname, $queryarray, $andor, $limit, $offset, $userid)
 {
     global $xoopsDB, $xoopsUser, $xoopsConfig;
-    $myts =& MyTextSanitizer::getInstance();
+    $myts = MyTextSanitizer::getInstance();
 
     $currentuid = !empty($xoopsUser) ? $xoopsUser->getVar('uid','E') : 0;
     if (is_object($xoopsUser)) {

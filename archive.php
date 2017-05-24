@@ -71,8 +71,8 @@ if ($user_id > 0) {
 $xoopsOption['template_main'] = 'weblog'.$mydirnumber . '_archive.html';
 
 // obtain class instances
-$weblog =& Weblog::getInstance();
-$weblogcat =& WeblogCategories::getInstance();
+$weblog = Weblog::getInstance();
+$weblogcat = WeblogCategories::getInstance();
 
 // construct the page
 // Include the page header
@@ -94,7 +94,7 @@ $catselbox[0]['cat_title'] = _BL_SELECT_ALL;
 $catselbox[0]['selected'] = ($cat_id == 0)? " selected" : "";
 $i = 1;
 
-$myts =& MyTextSanitizer::getInstance();
+$myts = MyTextSanitizer::getInstance();
 foreach ( $cat_array as $cat ) {
     $catselbox[$i]['prefix'] = substr(str_replace(".","--",$cat['prefix']), 2);
     $catselbox[$i]['cat_id'] = $myts->htmlSpecialChars($cat['cat_id']);

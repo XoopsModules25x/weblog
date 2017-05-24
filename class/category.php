@@ -197,7 +197,7 @@ class WeblogCategoryHandlerBase extends XoopsObjectHandler {
         foreach ($subarr as $sub) {
             $criteria->add(new criteria('cat_id', $sub), 'OR');
         }
-        $subcat =& $this->getObjects($criteria);
+        $subcat = $this->getObjects($criteria);
 
         return $subcat;
     }
@@ -268,7 +268,7 @@ class wbXoopsTree extends WeblogTree{
         if ( $sel_name == "" ) {
             $sel_name = $this->id;
         }
-        $myts =& MyTextSanitizer::getInstance();
+        $myts = MyTextSanitizer::getInstance();
         echo "<select name='".$sel_name."'";
         if ( $onchange != "" ) {
             echo " onchange='".$onchange."'";

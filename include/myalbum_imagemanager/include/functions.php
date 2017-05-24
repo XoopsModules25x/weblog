@@ -648,7 +648,7 @@ function myalbum_get_cat_options( $order = 'title' , $preset = 0 , $prefix = '--
 {
     global $xoopsDB ;
 
-    $myts =& MyTextSanitizer::getInstance() ;
+    $myts = MyTextSanitizer::getInstance() ;
 
     if( empty( $table_name_cat ) ) $table_name_cat = $GLOBALS['table_cat'] ;
     if( empty( $table_name_photos ) ) $table_name_photos = $GLOBALS['table_photos'] ;

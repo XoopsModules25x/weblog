@@ -21,7 +21,7 @@ if( ! is_object($xoopsUser) || !$xoopsUser->isAdmin($xoopsModule->mid()) && ( ! 
 }else{
     $post_privilege = true ;
 }
-$myts =& MyTextSanitizer::getInstance();    // MyTextSanitizer object
+$myts = MyTextSanitizer::getInstance();    // MyTextSanitizer object
 $cattree = new WeblogTree( $table_cat , "cat_id" , "cat_pid" ) ;
 
 // Get variables

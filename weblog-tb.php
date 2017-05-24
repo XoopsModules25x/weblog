@@ -28,7 +28,7 @@ include_once(sprintf('%s/modules/%s/class/class.weblogtrackback.php', XOOPS_ROOT
 include_once(sprintf('%s/modules/%s/class/class.weblog.php', XOOPS_ROOT_PATH, $xoopsModule->dirname()));
 include_once(sprintf('%s/modules/%s/include/encode_set.inc.php', XOOPS_ROOT_PATH, $xoopsModule->dirname()));
 
-$tb_operator =& Weblog_Trackback_Operator::getInstance() ;
+$tb_operator = Weblog_Trackback_Operator::getInstance() ;
 $trackback =& $tb_operator->newInstance() ;
 
 // get trackback ID
@@ -56,7 +56,7 @@ if( empty($tb_id) || get_class($tb_id) == "pear_error"|| ! preg_match("/^\d+$/",
     }
 }
 
-$weblog =& Weblog::getInstance();
+$weblog = Weblog::getInstance();
 $entry =& $weblog->handler->get($tb_id) ;
 
 @header('Content-Type: text/xml');

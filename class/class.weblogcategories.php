@@ -55,14 +55,14 @@ class WeblogCategories {
         if ($perPage > 0 ) {
             $criteria->setLimit($perPage);
         }
-        $result =& $this->handler->getObjects($criteria);
+        $result = $this->handler->getObjects($criteria);
 
         return $result;
     }
 
     function getCategory($cat_id) {
         $criteria = new criteriaCompo(new criteria('cat_id', $cat_id));
-        $result =& $this->handler->getObjects($criteria, true);
+        $result = $this->handler->getObjects($criteria, true);
         if (isset($result[$cat_id])) {
             return $result[$cat_id];
         } else {

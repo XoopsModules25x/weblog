@@ -20,7 +20,7 @@ $data = array() ;
 $user_id = !empty($_GET['user_id']) ? intval($_GET['user_id']) : 0;
 
 // obtain class instances
-$weblog =& Weblog::getInstance();
+$weblog = Weblog::getInstance();
 
 // obtain configuration parameters
 $max = $xoopsModuleConfig['rssmax'];

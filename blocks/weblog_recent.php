@@ -136,7 +136,7 @@ function b_weblog_recent_show($options) {
         $useroffset = $xoopsConfig['default_TZ'] - $xoopsConfig['server_TZ'] ; ;
     }
 
-    $myts =& MyTextSanitizer::getInstance();
+    $myts = MyTextSanitizer::getInstance();
     $block = array();
 
     include_once(sprintf('%s/modules/%s/config.php', XOOPS_ROOT_PATH, $mydirname ));
@@ -288,7 +288,7 @@ function b_weblog_users_weblogs_show($options) {
 
     $currentuid = !empty($xoopsUser) ? $xoopsUser->getVar('uid','E') : 0;
 
-    $myts =& MyTextSanitizer::getInstance();
+    $myts = MyTextSanitizer::getInstance();
     $block = array();
 
     if (is_object($xoopsUser)) {
@@ -429,7 +429,7 @@ function b_weblog_recent_tb_show($options) {
     $wb_configs = get_wb_moduleconfig($mydirname) ;
     list( $bl_contents_field , $permission_group_sql ) = weblog_create_permissionsql($wb_configs , $mydirname) ;
 
-    $myts =& MyTextSanitizer::getInstance();
+    $myts = MyTextSanitizer::getInstance();
     $block = array();
     $block['trackbacks'] = array() ;
     $sql = sprintf('SELECT bl.user_id, t.blog_id, if(t.tb_url!=\'\',t.tb_url,t.link) as link , t.blog_name, t.title as tb_title, t.trackback_created+%d as trackback_created ,bl.title as entry_title,%s as contents FROM %s as t , %s as bl',
@@ -520,7 +520,7 @@ function b_weblog_recent_comment_show($options) {
     $wb_configs = get_wb_moduleconfig($mydirname) ;
     list( $bl_contents_field , $permission_group_sql ) = weblog_create_permissionsql($wb_configs , $mydirname) ;
 
-    $myts =& MyTextSanitizer::getInstance();
+    $myts = MyTextSanitizer::getInstance();
     $block = array();
     $block['comments'] = array() ;
     $sql = sprintf('SELECT com_modified+%d as com_modified, com_uid, com_title, com_itemid, title,%s as contents, uname FROM %s as xc , %s as m , %s as bl , %s as u' ,
@@ -621,7 +621,7 @@ function b_weblog_recent_image_show($options) {
     $wb_configs = get_wb_moduleconfig($mydirname) ;
     list( $bl_contents_field , $permission_group_sql ) = weblog_create_permissionsql($wb_configs , $mydirname) ;
 
-    $myts =& MyTextSanitizer::getInstance();
+    $myts = MyTextSanitizer::getInstance();
 
     $weblog_image_url = XOOPS_URL . $wb_configs['weblog_myalbum_photospath'] ;
     $sql = sprintf('SELECT blog_id, user_id , uname, created+%d as created, title, contents , %s as contents_p FROM %s as bl , %s as u' ,
@@ -718,7 +718,7 @@ function b_weblog_category_list_show($options) {
     $cattree = new WeblogTree($xoopsDB->prefix($mydirname . '_category'), 'cat_id', 'cat_pid');
     $array = $cattree->getChildTreeArray(0, $sort_order);
 
-    $myts =& MyTextSanitizer::getInstance();
+    $myts = MyTextSanitizer::getInstance();
     $block = array();
     foreach ( $array as $cat ) {
         $category = array();

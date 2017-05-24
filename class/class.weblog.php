@@ -127,7 +127,7 @@ class Weblog {
         if ($perPage > 0 ) {
             $criteria->setLimit($perPage);
         }
-        $result =& $this->handler->getObjects($criteria, false, 'details', $useroffset);
+        $result = $this->handler->getObjects($criteria, false, 'details', $useroffset);
 
         return $result;
     }
@@ -149,7 +149,7 @@ class Weblog {
         if ($perPage > 0 ) {
             $criteria->setLimit($perPage);
         }
-        $result =& $this->handler->getObjects($criteria);
+        $result = $this->handler->getObjects($criteria);
 
         return $result;
     }
@@ -172,7 +172,7 @@ class Weblog {
         if ($perPage > 0 ) {
             $criteria->setLimit($perPage);
         }
-        $result =& $this->handler->getObjects($criteria, false , 'details', $useroffset);
+        $result = $this->handler->getObjects($criteria, false , 'details', $useroffset);
 
         return $result;
     }
@@ -185,7 +185,7 @@ class Weblog {
         if ($user_id > 0) {
             $criteria->add(new criteria('user_id', $user_id));
         }
-        $result =& $this->handler->getObjects($criteria, true, 'details', $useroffset);
+        $result = $this->handler->getObjects($criteria, true, 'details', $useroffset);
         if (isset($result[$blog_id])) {
             return $result[$blog_id];
         } else {
@@ -262,7 +262,7 @@ class Weblog {
         if ($perPage > 0 ) {
             $criteria->setLimit($perPage);
         }
-        $result =& $this->handler->getObjects($criteria, false, 'details' , $useroffset);
+        $result = $this->handler->getObjects($criteria, false, 'details' , $useroffset);
 
         return $result;
     }
@@ -287,7 +287,7 @@ class Weblog {
         if ($perPage > 0 ) {
             $criteria->setLimit($perPage);
         }
-        $result =& $this->handler->getObjects($criteria);
+        $result = $this->handler->getObjects($criteria);
 
         return $result;
     }
@@ -312,7 +312,7 @@ class Weblog {
         if ($perPage > 0 ) {
             $criteria->setLimit($perPage);
         }
-        $result =& $this->handler->getObjects($criteria);
+        $result = $this->handler->getObjects($criteria);
 
         return $result;
     }

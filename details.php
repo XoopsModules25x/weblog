@@ -55,9 +55,9 @@ if( ! $isAdmin && ! checkprivilege( "read_detail" , $xoopsModule->dirname() ) ){
 $xoopsOption['template_main'] = 'weblog'.$mydirnumber . '_details.html';
 
 // obtain class instances
-$myts =& MyTextSanitizer::getInstance();
-$weblog =& Weblog::getInstance();
-$weblogcat =& WeblogCategories::getInstance();
+$myts = MyTextSanitizer::getInstance();
+$weblog = Weblog::getInstance();
+$weblogcat = WeblogCategories::getInstance();
 
 $entryObject =& $weblog->getEntry($currentuid, $blog_id, 0, $useroffset);
 if (!$entryObject) {
@@ -66,7 +66,7 @@ if (!$entryObject) {
   exit();
 }
 // obtain trackback
-$tb_operator =& Weblog_Trackback_Operator::getInstance() ;
+$tb_operator = Weblog_Trackback_Operator::getInstance() ;
 $trackback_array = $tb_operator->handler->get( $entryObject->getVar('blog_id') ) ;
   $trackback_transmit = array() ;
   $trackback_recieved = array() ;

@@ -249,7 +249,7 @@ class WeblogEntryHandlerBase extends XoopsObjectHandler {
             $permission_group_array = explode('|' , $permission_group) ;
 
             $member_handler =& xoops_gethandler('group');
-            $groups =& $member_handler->getObjects();
+            $groups = $member_handler->getObjects();
             $group_array = array() ;
             foreach( $groups as $group ){
                 if( $group->getVar('groupid') == 1 ) continue ;
