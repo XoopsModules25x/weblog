@@ -70,7 +70,7 @@ if ( $block['is_custom'] ) {
         $textarea->setDescription( $notice_for_tags . "<br /><br /><a href='$uri_to_myself&amp;usespaw=0'>NORMAL</a>" ) ;
         ob_end_clean() ;
     } else {
-        $myts =& MyTextSanitizer::getInstance();
+        $myts = MyTextSanitizer::getInstance();
         $textarea = new XoopsFormDhtmlTextArea(_AM_CONTENT, 'bcontent', $myts->htmlSpecialChars( $block['content'] ) , 15, 70);
         if( $can_use_spaw ) {
             $textarea->setDescription( $notice_for_tags . "<br /><br /><a href='$uri_to_myself&amp;usespaw=1'>SPAW</a>" ) ;

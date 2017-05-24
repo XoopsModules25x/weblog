@@ -26,7 +26,7 @@ if( ! is_object($xoopsUser) || !$xoopsUser->isAdmin($xoopsModule->mid()) && ( ! 
     $post_privilege = true ;
 }
 
-$myts =& MyAlbumTextSanitizer::getInstance() ;
+$myts = MyAlbumTextSanitizer::getInstance() ;
 $cattree = new WeblogTree( $table_cat ,"cat_id" , "cat_pid" ) ;
 
 // GET variables

@@ -49,8 +49,8 @@ if ( file_exists(XOOPS_ROOT_PATH.'/modules/'.$xoopsModule->dirname().'/language/
 $user_id = !empty($_GET['user_id']) ? intval($_GET['user_id']) : 0;
 
 // obtain class instances
-$myts =& MyTextSanitizer::getInstance();
-$weblog =& Weblog::getInstance();
+$myts = MyTextSanitizer::getInstance();
+$weblog = Weblog::getInstance();
 
 // obtain configuration parameters
 $max = $xoopsModuleConfig['rssmax'];

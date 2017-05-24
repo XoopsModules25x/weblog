@@ -327,7 +327,7 @@ $modversion['config'][] = array(
 ) ;
 
 $member_handler =& xoops_gethandler('group');
-$groups =& $member_handler->getObjects();
+$groups = $member_handler->getObjects();
 $group_option = array() ;
 $group_default = array() ;
 foreach( $groups as $group ){

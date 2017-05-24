@@ -44,14 +44,14 @@ function privManagerLink() {
 
 function privmanager() {
     $member_handler =& xoops_gethandler('group');
-    $groups =& $member_handler->getObjects();
+    $groups = $member_handler->getObjects();
     $group_ids = array();
     foreach ($groups as $group) {
         $group_ids[$group->getVar('groupid')] = $group->getVar('name');
     }
 
     $group_handler =& xoops_getmodulehandler('priv');
-    $priv_groups =& $group_handler->getObjects();
+    $priv_groups = $group_handler->getObjects();
     $priv_group_ids = array();
     foreach ($priv_groups as $priv_group) {
         $priv_group_ids[$priv_group->getVar('priv_gid')] = $priv_group->getVar('name');
@@ -119,7 +119,7 @@ function deleteGroup($post) {
         $group_handler =& xoops_getmodulehandler('priv');
         foreach ($post['gid'] as $gid) {
             $criteria = new Criteria('priv_gid', $gid);
-            $group =& $group_handler->getObjects($criteria);
+            $group = $group_handler->getObjects($criteria);
             if (is_object($group[0])) {
                 $group_handler->delete($group[0]);
             }

@@ -28,7 +28,7 @@ include 'header.php';
 $com_itemid = isset($_GET['com_itemid']) ? intval($_GET['com_itemid']) : 0;
 if ($com_itemid > 0) {
     include_once XOOPS_ROOT_PATH.'/modules/'.$mydirname.'/class/class.weblog.php';
-    $weblog =& Weblog::getInstance();
+    $weblog = Weblog::getInstance();
     $entry = $weblog->getEntry(0, $com_itemid);
 
     // title

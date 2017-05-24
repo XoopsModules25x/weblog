@@ -50,8 +50,8 @@ if ( empty($blog_id) ) {
 }
 
 // obtain class instances
-$myts =& MyTextSanitizer::getInstance();
-$weblog =& Weblog::getInstance();
+$myts = MyTextSanitizer::getInstance();
+$weblog = Weblog::getInstance();
 
 // Determine the user we are retrieving the blog entries for
 $currentuid = !empty($xoopsUser) ? $xoopsUser->getVar('uid','E') : 0;

@@ -33,7 +33,7 @@ if( ! isset($mydirname) ){
 
 function weblog_com_update($link_id, $total_num){
   global $mydirname ;
-  $db =& Database::getInstance();
+  $db = Database::getInstance();
   $sql = 'UPDATE '.$db->prefix($mydirname).' SET comments = '.$total_num.' WHERE blog_id = '.$link_id;
   $db->query($sql);
 }

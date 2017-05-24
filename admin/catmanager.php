@@ -29,7 +29,7 @@ include('admin.inc.php');
 include_once(sprintf('%s/modules/%s/class/class.weblogtree.php', XOOPS_ROOT_PATH, $xoopsModule->dirname()));
 include_once dirname(__FILE__) . '/admin_header.php';
 
-$myts =& MyTextSanitizer::getInstance();
+$myts = MyTextSanitizer::getInstance();
 $mytree = new WeblogTree($xoopsDB->prefix($mydirname . '_category'), 'cat_id', 'cat_pid');
 
 $action = (isset($_POST['action']))? $_POST['action'] : "" ;
@@ -101,7 +101,7 @@ function catManager() {
 //    echo sprintf('<h4>%s&nbsp;&raquo;&raquo;&nbsp;%s</h4>', indexLink(), _AM_WEBLOG_CATMANAGER);
 
     $gperm_handler =& xoops_gethandler('groupperm');
-    $weblogcats =& WeblogCategories::getInstance();
+    $weblogcats = WeblogCategories::getInstance();
 
 //    $mytree->makeMySelBox('cat_title', 'cat_title');
     $indexAdmin = new ModuleAdmin();
@@ -321,7 +321,7 @@ function modifyCategory($post) {
         $cathandler =& xoops_getmodulehandler('category');
         $gperm_handler =& xoops_gethandler('groupperm');
         $count = $cathandler->getCount();
-        $weblogcats =& WeblogCategories::getInstance();
+        $weblogcats = WeblogCategories::getInstance();
         $wb_cat =& $cathandler->get($cat_id) ;
         $cat_pid = $wb_cat->getVar('cat_pid');
         $cat_title = $wb_cat->getVar('cat_title','s');

@@ -67,7 +67,7 @@ if (!$sysperm_handler->checkRight('system_admin', XOOPS_SYSTEM_BLOCK, $xoopsUser
 
 // get blocks owned by the module (Imported from xoopsblock.php then modified)
 //$block_arr =& XoopsBlock::getByModule( $target_mid ) ;
-$db =& Database::getInstance();
+$db = Database::getInstance();
 $sql = "SELECT * FROM ".$db->prefix("newblocks")." WHERE mid='$target_mid' ORDER BY visible DESC,side,weight";
 $result = $db->query($sql);
 $block_arr = array();
@@ -147,7 +147,7 @@ function list_blocks()
         }
 
         // target modules
-        $db =& Database::getInstance();
+        $db = Database::getInstance();
         $result = $db->query( "SELECT module_id FROM ".$db->prefix('block_module_link')." WHERE block_id='$bid'" ) ;
         $selected_mids = array();
         while ( list( $selected_mid ) = $db->fetchRow( $result ) ) {

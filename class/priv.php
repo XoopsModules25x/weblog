@@ -187,7 +187,7 @@ class WeblogPrivHandlerBase extends XoopsObjectHandler {
         foreach($gids as $gid) {
             $criteria->add(new criteria('priv_gid', $gid), 'OR');
         }
-        $result =& $this->getObjects($criteria);
+        $result = $this->getObjects($criteria);
         if (count($result)>0) {
             return true;
         } else {

@@ -30,14 +30,14 @@ include_once(sprintf('%s/modules/%s/class/class.weblogcategories.php', XOOPS_ROO
 include_once(sprintf('%s/modules/%s/class/class.weblogtrackback.php', XOOPS_ROOT_PATH, $xoopsModule->dirname()));
 include_once(sprintf('%s/modules/%s/include/gtickets.php', XOOPS_ROOT_PATH, $xoopsModule->dirname())) ;
 
-$weblog =& Weblog::getInstance();
-$weblogcat =& WeblogCategories::getInstance();
-$tb_operator =& Weblog_Trackback_Operator::getInstance() ;
+$weblog = Weblog::getInstance();
+$weblogcat = WeblogCategories::getInstance();
+$tb_operator = Weblog_Trackback_Operator::getInstance() ;
 
 function &getEntry($post) {
     global $xoopsModuleConfig ;
 
-    $weblog =& Weblog::getInstance();
+    $weblog = Weblog::getInstance();
 
     $permission_group = "" ;
     if( isset($post['permission_group']) && is_array($post['permission_group']) ){
@@ -337,7 +337,7 @@ if (!empty($_POST['post'])) {
     }
     $selbox = $weblogcat->getMySelectBox($entry->getVar('cat_id'));
     // add trackback data
-    $tb_operator =& Weblog_Trackback_Operator::getInstance() ;
+    $tb_operator = Weblog_Trackback_Operator::getInstance() ;
     $ent_trackback = $tb_operator->handler->getTrackbackurl_string( $blog_id , "transmit" ) ;
     $entry->setVar( 'ent_trackbackurl' , $ent_trackback );
     $recieved_trackback = $tb_operator->handler->get( $blog_id , "recieved" ) ;
@@ -347,7 +347,7 @@ if (!empty($_POST['post'])) {
     $entry =& getEntry($_POST);
     $selbox = $weblogcat->getMySelectBox($entry->getVar('cat_id'));
     // add trackback data
-    $tb_operator =& Weblog_Trackback_Operator::getInstance() ;
+    $tb_operator = Weblog_Trackback_Operator::getInstance() ;
     $recieved_trackback = $tb_operator->handler->get( $entry->getVar('blog_id') , "recieved" ) ;
   } else {    // first post
     $entry = $weblog->newInstance();
@@ -504,7 +504,7 @@ if (class_exists('XoopsFormEditor')) {
 //  $permission_tab = new XoopsFormSelect('Please set read permission of this Entry.<br />L to R :Your group\'s, Other group\'s and Anonymous users\'. "r" means readable.<br />', "permission" , $entry->getVar('permission') ) ;
 //  $permission_tab->addOptionArray( array('111'=>'r-r-r' , '110'=>'r-r--' , '100'=>'r----' , '010'=>'--r--') ) ;
     $member_handler =& xoops_gethandler('group');
-    $groups =& $member_handler->getObjects();
+    $groups = $member_handler->getObjects();
     $group_option = array() ;
     $group_array = array() ;
     foreach( $groups as $group ){

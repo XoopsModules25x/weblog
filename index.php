@@ -29,8 +29,8 @@ include_once(sprintf('%s/modules/%s/class/class.weblog.php', XOOPS_ROOT_PATH, $x
 include_once(sprintf('%s/modules/%s/class/class.weblogcategories.php', XOOPS_ROOT_PATH, $xoopsModule->dirname()));
 
 function getAllChildrenCount($currentuid, $cat_id, $user_id=0) {
-    $weblog =& Weblog::getInstance();
-    $weblogcat =& WeblogCategories::getInstance();
+    $weblog = Weblog::getInstance();
+    $weblogcat = WeblogCategories::getInstance();
 
     $count = $weblog->getCountByCategory($currentuid, $cat_id, $user_id);
     $arr = $weblogcat->getAllChildrenIds($cat_id);
@@ -76,9 +76,9 @@ $currentuid = $currentUser->getVar('uid');
 $xoopsOption['template_main'] = 'weblog'.$mydirnumber.'_entries.html';
 
 // obtain class instances
-$myts =& MyTextSanitizer::getInstance();
-$weblog =& Weblog::getInstance();
-$weblogcat =& WeblogCategories::getInstance();
+$myts = MyTextSanitizer::getInstance();
+$weblog = Weblog::getInstance();
+$weblogcat = WeblogCategories::getInstance();
 
 if ($user_id > 0) {
   $blogOwner = new XoopsUser($user_id);
